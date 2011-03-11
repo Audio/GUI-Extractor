@@ -6,13 +6,18 @@
 
 QT       += core gui
 
-TARGET = GUI-Extractor
+TARGET   = GUI-Extractor
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES  += main.cpp \
+    MainWindow.cpp \
+    UsiXML/Element.cpp \
+    UIA/Client.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += MainWindow.h \
+    UsiXML/Element.h \
+    UIA/Client.h \
+    UIA/includes.h
 
-FORMS    += mainwindow.ui
+FORMS    += MainWindow.ui

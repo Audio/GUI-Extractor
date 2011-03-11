@@ -1,14 +1,41 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
+#include "UIA/Client.h"
+#include <QtCore/QtDebug>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+
+MainWindow::MainWindow(QWidget* parent)
+  : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
+  setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+
+  connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
+  connect(ui->buttonReload, SIGNAL( pressed()), SLOT( loadTopLevelWindows() ));
+
+  client = new Client();
+  connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
+  client->initialize();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+  delete client;
+  delete ui;
+}
+
+void MainWindow::logMessage(const QString& message)
+{
+  qDebug() << message;
+  ui->logArea->appendPlainText(message);
+}
+
+void MainWindow::loadTopLevelWindows()
+{
+  ui->listTopWindows->clear();
+  QList<IUIAutomationElement*> windows = client->topLevelWindows();
+  foreach(IUIAutomationElement* window, windows ) {
+    QString title = client->getElementName(window);
+    ui->listTopWindows->addItem(title);
+  }
 }
