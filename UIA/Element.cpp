@@ -16,17 +16,23 @@ Element::~Element()
 
 QString Element::getName()
 {
-  // TODO cache
-  BSTR name;
-  HRESULT hr = UIAElement->get_CurrentName(&name);
-  return ( SUCCEEDED(hr) ? bstrToQString(name) : "FAILLLL" );
+  if ( cachedName.isEmpty() ) {
+    BSTR name;
+    HRESULT hr = UIAElement->get_CurrentName(&name);
+    if ( SUCCEEDED(hr) && name )
+      cachedName = bstrToQString(name);
+  }
+
+  return cachedName;
 }
 
-QString Element::bstrToQString(const BSTR& bstr)
+IUIAutomationElement* Element::getUIAElement() const
 {
-  if (!bstr)             // TODO it can falls on assert
-    return "?? WTF ??";
+  return UIAElement;
+}
 
+QString Element::bstrToQString(BSTR& bstr)
+{
   std::wstring str = (LPCWSTR) bstr;
   QString qstr = QString::fromStdWString(str);
   SysFreeString(bstr);

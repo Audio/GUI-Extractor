@@ -12,11 +12,13 @@ public:
   ~Element();
 
   QString getName();
+  IUIAutomationElement* getUIAElement() const;
 
 private:
-  QString bstrToQString(const BSTR& bstr);
+  QString bstrToQString(BSTR& bstr);
 
   IUIAutomationElement* UIAElement;
+  QString cachedName;
 };
 
 #endif // ELEMENT_H

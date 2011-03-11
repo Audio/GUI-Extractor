@@ -1,10 +1,6 @@
 #include "Client.h"
 
 
-Client::Client()
-{
-}
-
 Client::~Client()
 {
   UIA->Release();
@@ -23,40 +19,59 @@ void Client::initialize()
     emit error("UIA instance has been successfuly created");
 }
 
-QList<Element*> Client::topLevelWindows()
+Element* Client::getRootElement()
 {
-  QList<Element*> windows;
-
   IUIAutomationElement* root = NULL;
   HRESULT hr = UIA->GetRootElement(&root);
-  if ( FAILED(hr) || !root )
-    goto cleanup;
+  if ( FAILED(hr) || !root ) {
+    emit error("Cannot obtain root element");
+    if (root)
+      root->Release();
 
-  IUIAutomationTreeWalker* wallker = NULL;
-  UIA->get_ContentViewWalker(&wallker);
-  if (!wallker)
-    goto cleanup;
+    return NULL;
+  }
+
+  return new Element(root);
+}
+
+QList<Element*> Client::getImmediateChildren(Element* parent)
+{
+  QList<Element*> children;
+
+  IUIAutomationTreeWalker* walker = NULL;
+  UIA->get_RawViewWalker(&walker);
+  if (!walker) {
+    emit error("Cannot obtaion viewWallker in getImmediateChildren()");
+    return children;
+  }
 
   IUIAutomationElement* element;
-  wallker->GetFirstChildElement(root, &element);
-  if (!element)
-    goto cleanup;
+  walker->GetFirstChildElement( parent->getUIAElement(), &element );
+  if (!element) {
+    emit error("Cannot obtaion first child in getImmediateChildren()");
+    return children;
+  }
 
   while (element) {
-    Element* el = new Element(element);
-    windows.append(el);
-
+    children.append( new Element(element) );
     IUIAutomationElement* next = NULL;
-    wallker->GetNextSiblingElement(element, &next);
+    walker->GetNextSiblingElement(element, &next);
     element = next;
   }
 
-cleanup:
-  if (root)
-    root->Release();
+  walker->Release();
 
-  if (wallker)
-    wallker->Release();
+  return children;
+}
+
+QList<Element*> Client::topLevelWindows()
+{
+  QList<Element*> windows;
+  Element* root = getRootElement();
+  if (root) {
+    windows = getImmediateChildren(root);
+    delete root;
+  }
 
   return windows;
 }
