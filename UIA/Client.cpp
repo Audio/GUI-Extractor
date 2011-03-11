@@ -1,14 +1,7 @@
 #include "Client.h"
 
 
-Client::~Client()
-{
-  UIA->Release();
-  CoUninitialize();
-  emit error("UIA instance has been deallocated");
-}
-
-void Client::initialize()
+Client::Client()
 {
   CoInitialize(NULL);
   HRESULT hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**) &UIA);
@@ -17,6 +10,13 @@ void Client::initialize()
     emit error("Initialization of UIA Failed");
   else
     emit error("UIA instance has been successfuly created");
+}
+
+Client::~Client()
+{
+  UIA->Release();
+  CoUninitialize();
+  emit error("UIA instance has been deallocated");
 }
 
 Element* Client::getRootElement()

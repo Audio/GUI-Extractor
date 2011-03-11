@@ -13,9 +13,9 @@ class Client : public QObject
   Q_OBJECT
 
 public:
+  Client();
   ~Client();
 
-  void initialize();
   Element* getRootElement();
   QList<Element*> getImmediateChildren(Element* parent);
   QList<Element*> topLevelWindows();

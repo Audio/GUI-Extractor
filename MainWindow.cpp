@@ -17,13 +17,14 @@ MainWindow::MainWindow(QWidget* parent)
 
   client = new Client();
   connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
-  client->initialize();
 }
 
 MainWindow::~MainWindow()
 {
-  delete client;
+  disconnect(client, 0, 0, 0);
+
   delete ui;
+  delete client;
 }
 
 void MainWindow::logMessage(const QString& message)
