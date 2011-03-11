@@ -22,6 +22,7 @@ public slots:
   void logMessage(const QString& message);
 
 private slots:
+  void analyzeSelectedWindow();
   void loadTopLevelWindows();
 
 private:

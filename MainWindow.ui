@@ -59,7 +59,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Input</string>
     </property>
-    <widget class="QListWidget" name="listTopWindows">
+    <widget class="QListWidget" name="topWindows">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -121,7 +121,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Output</string>
     </property>
-    <widget class="QTreeView" name="elementTree">
+    <widget class="QTreeWidget" name="elementTree">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -130,6 +130,11 @@ p, li { white-space: pre-wrap; }
        <height>261</height>
       </rect>
      </property>
+     <column>
+      <property name="text">
+       <string>Elements</string>
+      </property>
+     </column>
     </widget>
    </widget>
    <zorder>groupBox_2</zorder>

@@ -13,11 +13,13 @@ TEMPLATE = app
 SOURCES  += main.cpp \
     MainWindow.cpp \
     UIA/Client.cpp \
-    UIA/Element.cpp
+    UIA/Element.cpp \
+    TopWindowsItem.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
     UIA/includes.h \
-    UIA/Element.h
+    UIA/Element.h \
+    TopWindowsItem.h
 
 FORMS    += MainWindow.ui
