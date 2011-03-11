@@ -12,12 +12,12 @@ TEMPLATE = app
 
 SOURCES  += main.cpp \
     MainWindow.cpp \
-    UsiXML/Element.cpp \
-    UIA/Client.cpp
+    UIA/Client.cpp \
+    UIA/Element.cpp
 
 HEADERS  += MainWindow.h \
-    UsiXML/Element.h \
     UIA/Client.h \
-    UIA/includes.h
+    UIA/includes.h \
+    UIA/Element.h
 
 FORMS    += MainWindow.ui

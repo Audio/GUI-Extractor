@@ -33,9 +33,10 @@ void MainWindow::logMessage(const QString& message)
 void MainWindow::loadTopLevelWindows()
 {
   ui->listTopWindows->clear();
-  QList<IUIAutomationElement*> windows = client->topLevelWindows();
-  foreach(IUIAutomationElement* window, windows ) {
-    QString title = client->getElementName(window);
+  QList<Element*> windows = client->topLevelWindows();
+  foreach(Element* window, windows) {
+    QString title = window->getName();
+    delete window;
     ui->listTopWindows->addItem(title);
   }
 }

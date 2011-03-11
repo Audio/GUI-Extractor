@@ -7,7 +7,7 @@ Client::Client()
 
 Client::~Client()
 {
-  uia->Release();
+  UIA->Release();
   CoUninitialize();
   emit error("UIA instance has been deallocated");
 }
@@ -15,7 +15,7 @@ Client::~Client()
 void Client::initialize()
 {
   CoInitialize(NULL);
-  HRESULT hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**) &uia);
+  HRESULT hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**) &UIA);
 
   if ( FAILED(hr) )
     emit error("Initialization of UIA Failed");
@@ -23,17 +23,17 @@ void Client::initialize()
     emit error("UIA instance has been successfuly created");
 }
 
-QList<IUIAutomationElement*> Client::topLevelWindows()
+QList<Element*> Client::topLevelWindows()
 {
-  QList<IUIAutomationElement*> windows;
+  QList<Element*> windows;
 
   IUIAutomationElement* root = NULL;
-  HRESULT hr = uia->GetRootElement(&root);
-  if ( FAILED(hr) || root == NULL )
+  HRESULT hr = UIA->GetRootElement(&root);
+  if ( FAILED(hr) || !root )
     goto cleanup;
 
   IUIAutomationTreeWalker* wallker = NULL;
-  uia->get_ContentViewWalker(&wallker);
+  UIA->get_ContentViewWalker(&wallker);
   if (!wallker)
     goto cleanup;
 
@@ -43,8 +43,8 @@ QList<IUIAutomationElement*> Client::topLevelWindows()
     goto cleanup;
 
   while (element) {
-    // TODO call Release() !!!
-    windows.append(element);
+    Element* el = new Element(element);
+    windows.append(el);
 
     IUIAutomationElement* next = NULL;
     wallker->GetNextSiblingElement(element, &next);
@@ -59,22 +59,4 @@ cleanup:
     wallker->Release();
 
   return windows;
-}
-
-QString Client::getElementName(IUIAutomationElement* element)
-{
-  BSTR name;
-  HRESULT hr = element->get_CurrentName(&name);
-  return ( SUCCEEDED(hr) ? bstrToQString(name) : "FAILLLL" );
-}
-
-QString Client::bstrToQString(const BSTR& bstr)
-{
-  if (!bstr)             // TODO jinak to pada na assertu
-    return "?? WTF ??";
-
-  std::wstring str = (LPCWSTR) bstr;
-  QString qstr = QString::fromStdWString(str);
-  SysFreeString(bstr);
-  return qstr;
 }

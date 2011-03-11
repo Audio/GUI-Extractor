@@ -5,6 +5,7 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include "includes.h"
+#include "Element.h"
 
 
 class Client : public QObject
@@ -16,16 +17,13 @@ public:
   ~Client();
 
   void initialize();
-  QList<IUIAutomationElement*> topLevelWindows();
-  QString getElementName(IUIAutomationElement* element);
+  QList<Element*> topLevelWindows();
 
 signals:
   void error(const QString& message);
 
 private:
-  QString bstrToQString(const BSTR& bstr);
-
-  IUIAutomation* uia;
+  IUIAutomation* UIA;
 };
 
 #endif // CLIENT_H
