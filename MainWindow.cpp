@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget* parent)
   connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
   connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( loadTopLevelWindows() ));
   connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
+  connect(ui->buttonHighlight, SIGNAL( pressed() ), SLOT( highlightSelectedWindow() ));
 
   client = new Client();
   connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
@@ -33,18 +34,21 @@ void MainWindow::logMessage(const QString& message)
   ui->logArea->appendPlainText(message);
 }
 
-void MainWindow::analyzeSelectedWindow()
+Element* MainWindow::getSelectedTopLevelWindow() const
 {
   QList<QListWidgetItem*> selected = ui->topWindows->selectedItems();
-  if ( !selected.size() ) {
-    logMessage("No window has been selected for analysis");
-    return;
-  }
+  return ( selected.size() ) ? ((TopWindowsItem*) selected.first())->getElement()
+                             : NULL;
+}
 
-  ui->elementTree->clear();
+void MainWindow::analyzeSelectedWindow()
+{
+  Element* element = getSelectedTopLevelWindow();
+  if (!element)
+    return logMessage("No window has been selected for analysis");
 
-  Element* element = ((TopWindowsItem*) selected.first())->getElement();
   logMessage("Analyzing: " + element->getName() );
+  ui->elementTree->clear();
 
   QList<Element*> children = client->getImmediateChildren(element);
   foreach(Element* child, children)
@@ -59,6 +63,15 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
   QList<Element*> children = client->getImmediateChildren(element);
   foreach(Element* child, children)
     addToTreeIncludingChildren(child, item);
+}
+
+void MainWindow::highlightSelectedWindow()
+{
+  Element* element = getSelectedTopLevelWindow();
+  if (!element)
+    return logMessage("No window has been selected to be highlighted");
+
+  element->highlight();
 }
 
 void MainWindow::loadTopLevelWindows()

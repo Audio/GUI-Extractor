@@ -13,8 +13,8 @@ public:
   ~Element();
 
   QString getName();
-  ElementArea* getArea();
   IUIAutomationElement* getUIAElement() const;
+  void highlight();
 
 private:
   QString bstrToQString(BSTR& bstr);

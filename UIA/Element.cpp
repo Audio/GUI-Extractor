@@ -30,7 +30,13 @@ QString Element::getName()
   return cachedName;
 }
 
-ElementArea* Element::getArea()
+IUIAutomationElement* Element::getUIAElement() const
+{
+  return UIAElement;
+}
+
+
+void Element::highlight()
 {
   if (!area) {
     RECT rect;
@@ -39,12 +45,8 @@ ElementArea* Element::getArea()
       area = new ElementArea(rect);
   }
 
-  return area;
-}
-
-IUIAutomationElement* Element::getUIAElement() const
-{
-  return UIAElement;
+  if (area)
+    area->show();
 }
 
 QString Element::bstrToQString(BSTR& bstr)

@@ -24,8 +24,11 @@ public slots:
   void logMessage(const QString& message);
 
 private slots:
+  Element* getSelectedTopLevelWindow() const;
   void analyzeSelectedWindow();
   void addToTreeIncludingChildren(Element* element, ElementTreeItem* parent = 0);
+
+  void highlightSelectedWindow();
 
   void loadTopLevelWindows();
 
