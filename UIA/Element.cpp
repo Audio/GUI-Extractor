@@ -33,7 +33,6 @@ IUIAutomationElement* Element::getUIAElement() const
   return UIAElement;
 }
 
-
 void Element::highlight()
 {
   destroyActiveArea();

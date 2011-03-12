@@ -2,7 +2,7 @@
 #define TOPWINDOWSITEM_H
 
 #include "UIA/Element.h"
-#include <QListWidgetItem>
+#include <QtGui/QListWidgetItem>
 
 
 class TopWindowsItem : public QListWidgetItem
