@@ -17,6 +17,7 @@ public:
   void highlight();
 
 private:
+  void destroyActiveArea();
   QString bstrToQString(BSTR& bstr);
 
   IUIAutomationElement* UIAElement;
