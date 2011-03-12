@@ -3,6 +3,7 @@
 
 #include <QtCore/QString>
 #include "includes.h"
+#include "ElementArea.h"
 
 
 class Element
@@ -12,12 +13,14 @@ public:
   ~Element();
 
   QString getName();
+  ElementArea* getArea();
   IUIAutomationElement* getUIAElement() const;
 
 private:
   QString bstrToQString(BSTR& bstr);
 
   IUIAutomationElement* UIAElement;
+  ElementArea* area;
   QString cachedName;
 };
 

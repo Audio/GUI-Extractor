@@ -3,6 +3,7 @@
 
 
 Element::Element(IUIAutomationElement* element)
+  : area(NULL)
 {
   UIAElement = element;
   qDebug() << "Created element " + getName();
@@ -10,6 +11,9 @@ Element::Element(IUIAutomationElement* element)
 
 Element::~Element()
 {
+  if (area)
+    delete area;
+
   qDebug() << "Memory for object " + getName() + " released.";
   UIAElement->Release();
 }
@@ -24,6 +28,18 @@ QString Element::getName()
   }
 
   return cachedName;
+}
+
+ElementArea* Element::getArea()
+{
+  if (!area) {
+    RECT rect;
+    HRESULT hr = UIAElement->get_CurrentBoundingRectangle(&rect);
+    if ( SUCCEEDED(hr) )
+      area = new ElementArea(rect);
+  }
+
+  return area;
 }
 
 IUIAutomationElement* Element::getUIAElement() const
