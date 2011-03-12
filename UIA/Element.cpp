@@ -13,7 +13,7 @@ Element::~Element()
 {
   destroyActiveArea();
   UIAElement->Release();
-  qDebug() << "Memory for object " + getName() + " released.";
+  qDebug() << "Memory for object " + cachedName + " released.";
 }
 
 QString Element::getName()
