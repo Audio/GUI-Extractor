@@ -1,7 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include "UIA/Element.h"
+#include "ElementTreeItem.h"
+#include <QtGui/QMainWindow>
 
 
 namespace Ui {
@@ -23,6 +25,8 @@ public slots:
 
 private slots:
   void analyzeSelectedWindow();
+  void addToTreeIncludingChildren(Element* element, ElementTreeItem* parent = 0);
+
   void loadTopLevelWindows();
 
 private:

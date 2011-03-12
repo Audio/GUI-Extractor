@@ -14,12 +14,14 @@ SOURCES  += main.cpp \
     MainWindow.cpp \
     UIA/Client.cpp \
     UIA/Element.cpp \
-    TopWindowsItem.cpp
+    TopWindowsItem.cpp \
+    ElementTreeItem.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
     UIA/includes.h \
     UIA/Element.h \
-    TopWindowsItem.h
+    TopWindowsItem.h \
+    ElementTreeItem.h
 
 FORMS    += MainWindow.ui

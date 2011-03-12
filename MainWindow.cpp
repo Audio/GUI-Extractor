@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "TopWindowsItem.h"
 #include "UIA/Client.h"
+#include "TopWindowsItem.h"
 #include <QtCore/QtDebug>
 
 
@@ -36,12 +36,29 @@ void MainWindow::logMessage(const QString& message)
 void MainWindow::analyzeSelectedWindow()
 {
   QList<QListWidgetItem*> selected = ui->topWindows->selectedItems();
-  if ( selected.size() != 1 )
+  if ( !selected.size() ) {
+    logMessage("No window has been selected for analysis");
     return;
+  }
 
-  TopWindowsItem* window = (TopWindowsItem*) selected.first();
-  QString title = window->getElement()->getName();
-  logMessage("To analyze: " + title);
+  ui->elementTree->clear();
+
+  Element* element = ((TopWindowsItem*) selected.first())->getElement();
+  logMessage("Analyzing: " + element->getName() );
+
+  QList<Element*> children = client->getImmediateChildren(element);
+  foreach(Element* child, children)
+    addToTreeIncludingChildren(child);
+}
+
+void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* parent)
+{
+  ElementTreeItem* item = (parent) ? new ElementTreeItem(parent, element)
+                                   : new ElementTreeItem(ui->elementTree, element);
+
+  QList<Element*> children = client->getImmediateChildren(element);
+  foreach(Element* child, children)
+    addToTreeIncludingChildren(child, item);
 }
 
 void MainWindow::loadTopLevelWindows()
