@@ -47,10 +47,8 @@ QList<Element*> Client::getImmediateChildren(Element* parent)
 
   IUIAutomationElement* element;
   walker->GetFirstChildElement( parent->getUIAElement(), &element );
-  if (!element) {
-    emit error("Cannot obtaion first child in getImmediateChildren()");
+  if (!element)
     return children;
-  }
 
   while (element) {
     children.append( new Element(element) );

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>744</width>
+    <width>927</width>
     <height>646</height>
    </rect>
   </property>
@@ -20,9 +20,9 @@
    <widget class="QTextEdit" name="exportArea">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>470</x>
       <y>220</y>
-      <width>411</width>
+      <width>441</width>
       <height>261</height>
      </rect>
     </property>
@@ -42,7 +42,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>20</x>
       <y>490</y>
-      <width>701</width>
+      <width>891</width>
       <height>101</height>
      </rect>
     </property>
@@ -52,7 +52,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>531</width>
+      <width>711</width>
       <height>181</height>
      </rect>
     </property>
@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>401</width>
+       <width>561</width>
        <height>131</height>
       </rect>
      </property>
@@ -85,8 +85,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="buttonReload">
      <property name="geometry">
       <rect>
-       <x>420</x>
-       <y>40</y>
+       <x>590</x>
+       <y>50</y>
        <width>101</width>
        <height>23</height>
       </rect>
@@ -98,7 +98,7 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="buttonAnalyze">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>590</x>
        <y>80</y>
        <width>101</width>
        <height>23</height>
@@ -126,7 +126,7 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>271</width>
+       <width>441</width>
        <height>261</height>
       </rect>
      </property>
@@ -147,7 +147,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>744</width>
+     <width>927</width>
      <height>21</height>
     </rect>
    </property>
