@@ -3,7 +3,6 @@
 
 
 Element::Element(IUIAutomationElement* element)
-  : area(NULL)
 {
   UIAElement = element;
   qDebug() << "Created element " + getName();
@@ -11,9 +10,15 @@ Element::Element(IUIAutomationElement* element)
 
 Element::~Element()
 {
-  destroyActiveArea();
   UIAElement->Release();
   qDebug() << "Memory for object " + cachedName + " released.";
+}
+
+const ElementArea* Element::getArea() const
+{
+  RECT rect;
+  HRESULT hr = UIAElement->get_CurrentBoundingRectangle(&rect);
+  return SUCCEEDED(hr) ? new ElementArea(rect) : NULL;
 }
 
 QString Element::getName()
@@ -31,31 +36,6 @@ QString Element::getName()
 IUIAutomationElement* Element::getUIAElement() const
 {
   return UIAElement;
-}
-
-void Element::highlight()
-{
-  destroyActiveArea();
-
-  RECT rect;
-  HRESULT hr = UIAElement->get_CurrentBoundingRectangle(&rect);
-  if ( SUCCEEDED(hr) ) {
-    area = new ElementArea(rect);
-    area->show();
-  } else {
-    qDebug() << "Cannot get bounding rectangle for " + getName();
-  }
-}
-
-void Element::destroyActiveArea()
-{
-  if (area) {
-    if ( area->isVisible() )
-      area->close();
-
-    delete area;
-    area = NULL;
-  }
 }
 
 QString Element::bstrToQString(BSTR& bstr)

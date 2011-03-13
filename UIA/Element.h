@@ -12,16 +12,14 @@ public:
   Element(IUIAutomationElement* element);
   ~Element();
 
+  const ElementArea* getArea() const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;
-  void highlight();
 
 private:
-  void destroyActiveArea();
   QString bstrToQString(BSTR& bstr);
 
   IUIAutomationElement* UIAElement;
-  ElementArea* area;
   QString cachedName;
 };
 

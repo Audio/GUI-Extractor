@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "UIA/Client.h"
-#include "TopWindowsItem.h"
+#include "Highlighter.h"
 #include <QtCore/QtDebug>
 
 
@@ -9,12 +9,13 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent), ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
+  ui->topWindows->setMouseTracking(true);
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
   connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
   connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( loadTopLevelWindows() ));
   connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
-  connect(ui->buttonHighlight, SIGNAL( pressed() ), SLOT( highlightSelectedWindow() ));
+  connect(ui->topWindows, SIGNAL( itemEntered(QListWidgetItem*) ), SLOT( highlightSelectedWindow(QListWidgetItem*) ));
 
   client = new Client();
   connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
+  Highlighter::hideActive();
   disconnect(client, 0, 0, 0);
 
   delete ui;
@@ -65,13 +67,10 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
     addToTreeIncludingChildren(child, item);
 }
 
-void MainWindow::highlightSelectedWindow()
+void MainWindow::highlightSelectedWindow(QListWidgetItem* item)
 {
-  Element* element = getSelectedTopLevelWindow();
-  if (!element)
-    return logMessage("No window has been selected to be highlighted");
-
-  element->highlight();
+  Element* element = ((TopWindowsItem*) item)->getElement();
+  Highlighter::highlight(element);
 }
 
 void MainWindow::loadTopLevelWindows()

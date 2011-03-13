@@ -16,7 +16,8 @@ SOURCES  += main.cpp \
     UIA/Element.cpp \
     TopWindowsItem.cpp \
     ElementTreeItem.cpp \
-    UIA/ElementArea.cpp
+    UIA/ElementArea.cpp \
+    Highlighter.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -24,6 +25,7 @@ HEADERS  += MainWindow.h \
     UIA/Element.h \
     TopWindowsItem.h \
     ElementTreeItem.h \
-    UIA/ElementArea.h
+    UIA/ElementArea.h \
+    Highlighter.h
 
 FORMS    += MainWindow.ui

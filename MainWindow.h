@@ -3,6 +3,7 @@
 
 #include "UIA/Element.h"
 #include "ElementTreeItem.h"
+#include "TopWindowsItem.h"
 #include <QtGui/QMainWindow>
 
 
@@ -28,7 +29,7 @@ private slots:
   void analyzeSelectedWindow();
   void addToTreeIncludingChildren(Element* element, ElementTreeItem* parent = 0);
 
-  void highlightSelectedWindow();
+  void highlightSelectedWindow(QListWidgetItem* item);
 
   void loadTopLevelWindows();
 

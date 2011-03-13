@@ -2,17 +2,17 @@
 #define ELEMENTAREA_H
 
 #include "includes.h"
-#include <QtGui/QWidget>
 
 
-class ElementArea : public QWidget
+struct ElementArea
 {
 public:
   ElementArea(const RECT& boundingRectangle);
 
-protected:
-  void paintEvent(QPaintEvent*);
-  QSize sizeHint () const;
+  inline int getLeft()   const { return left; };
+  inline int getTop()    const { return top; };
+  inline int getWidth()  const { return width; };
+  inline int getHeight() const { return height; };
 
 private:
   int left;
