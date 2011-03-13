@@ -22,7 +22,7 @@
      <rect>
       <x>470</x>
       <y>220</y>
-      <width>441</width>
+      <width>431</width>
       <height>261</height>
      </rect>
     </property>
@@ -42,7 +42,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>20</x>
       <y>490</y>
-      <width>891</width>
+      <width>881</width>
       <height>101</height>
      </rect>
     </property>
@@ -108,26 +108,13 @@ p, li { white-space: pre-wrap; }
       <string>Analyze selected</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="buttonHighlight">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>110</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Highlight selected</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>200</y>
-      <width>721</width>
+      <width>901</width>
       <height>401</height>
      </rect>
     </property>
@@ -150,10 +137,45 @@ p, li { white-space: pre-wrap; }
      </column>
     </widget>
    </widget>
-   <zorder>groupBox_2</zorder>
-   <zorder>exportArea</zorder>
-   <zorder>logArea</zorder>
-   <zorder>groupBox</zorder>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>10</y>
+      <width>181</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Auto-highlighting</string>
+    </property>
+    <widget class="QCheckBox" name="highlightWindows">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>30</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selected windows</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="highlightElements">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>50</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selected elements</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -183,9 +205,16 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionElementCursor"/>
     <addaction name="actionElementFocus"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuApplication"/>
    <addaction name="menuExtract"/>
    <addaction name="menuExplore"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -215,6 +244,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionElementCursor">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Element under the cursor</string>
    </property>
@@ -223,11 +255,22 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionElementFocus">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Focused element</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

@@ -10,12 +10,15 @@ MainWindow::MainWindow(QWidget* parent)
 {
   ui->setupUi(this);
   ui->topWindows->setMouseTracking(true);
+  ui->elementTree->setMouseTracking(true);
+
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
   connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
   connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( loadTopLevelWindows() ));
   connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
   connect(ui->topWindows, SIGNAL( itemEntered(QListWidgetItem*) ), SLOT( highlightSelectedWindow(QListWidgetItem*) ));
+  connect(ui->elementTree, SIGNAL( itemEntered(QTreeWidgetItem*, int) ), SLOT( highlightSelectedElement(QTreeWidgetItem*) ));
 
   client = new Client();
   connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
@@ -69,8 +72,18 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
 
 void MainWindow::highlightSelectedWindow(QListWidgetItem* item)
 {
-  Element* element = ((TopWindowsItem*) item)->getElement();
-  Highlighter::highlight(element);
+  if ( highlightWindows() ) {
+    Element* element = ((TopWindowsItem*) item)->getElement();
+    Highlighter::highlight(element);
+  }
+}
+
+void MainWindow::highlightSelectedElement(QTreeWidgetItem* item)
+{
+  if ( highlightElements() ) {
+    Element* element = ((ElementTreeItem*) item)->getElement();
+    Highlighter::highlight(element);
+  }
 }
 
 void MainWindow::loadTopLevelWindows()
@@ -81,4 +94,14 @@ void MainWindow::loadTopLevelWindows()
     TopWindowsItem* item = new TopWindowsItem(ui->topWindows, window);
     ui->topWindows->addItem(item);
   }
+}
+
+bool MainWindow::highlightWindows() const
+{
+  return ui->highlightWindows->isChecked();
+}
+
+bool MainWindow::highlightElements() const
+{
+  return ui->highlightElements->isChecked();
 }
