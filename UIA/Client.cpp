@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "ElementFactory.h"
 
 
 Client::Client()
@@ -31,7 +32,7 @@ Element* Client::getRootElement()
     return NULL;
   }
 
-  return new Element(root);
+  return ElementFactory::getElement(root);
 }
 
 QList<Element*> Client::getImmediateChildren(Element* parent)
@@ -47,11 +48,9 @@ QList<Element*> Client::getImmediateChildren(Element* parent)
 
   IUIAutomationElement* element;
   walker->GetFirstChildElement( parent->getUIAElement(), &element );
-  if (!element)
-    return children;
 
   while (element) {
-    children.append( new Element(element) );
+    children.append( ElementFactory::getElement(element) );
     IUIAutomationElement* next = NULL;
     walker->GetNextSiblingElement(element, &next);
     element = next;

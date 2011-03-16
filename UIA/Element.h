@@ -5,13 +5,19 @@
 #include "includes.h"
 #include "ElementArea.h"
 
+class ElementFactory;
 
 class Element
 {
-public:
+  friend class ElementFactory;
+
+protected:
   Element(IUIAutomationElement* element);
+
+public:
   ~Element();
 
+public:
   const ElementArea* getArea() const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;
