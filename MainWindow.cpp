@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent)
   ui->setupUi(this);
   ui->topWindows->setMouseTracking(true);
   ui->elementTree->setMouseTracking(true);
+  ui->elementTree->setColumnWidth(0, 300);
 
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 

@@ -26,5 +26,8 @@ Element* ElementTreeItem::getElement() const
 void ElementTreeItem::initialize(Element* element)
 {
   this->element = element;
-  setText(0, element->getName() );
+  QString name = element->getName().isEmpty() ? "-" : element->getName();
+
+  setText(0, name);
+  setText(1, element->getType() );
 }
