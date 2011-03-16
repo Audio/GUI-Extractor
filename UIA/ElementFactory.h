@@ -8,7 +8,7 @@
 class ElementFactory
 {
 public:
-    static Element* getElement(IUIAutomationElement* element);
+  static Element* getElement(IUIAutomationElement* element);
 };
 
 #endif // ELEMENTFACTORY_H

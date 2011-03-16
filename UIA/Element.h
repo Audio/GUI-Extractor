@@ -21,6 +21,7 @@ public:
   const ElementArea* getArea() const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;
+  virtual QString getType() = 0;
 
 private:
   QString bstrToQString(BSTR& bstr);

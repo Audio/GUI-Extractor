@@ -18,7 +18,9 @@ SOURCES  += main.cpp \
     ElementTreeItem.cpp \
     UIA/ElementArea.cpp \
     Highlighter.cpp \
-    UIA/ElementFactory.cpp
+    UIA/ElementFactory.cpp \
+    UIA/EButton.cpp \
+    UIA/EUnknown.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -28,6 +30,8 @@ HEADERS  += MainWindow.h \
     ElementTreeItem.h \
     UIA/ElementArea.h \
     Highlighter.h \
-    UIA/ElementFactory.h
+    UIA/ElementFactory.h \
+    UIA/EButton.h \
+    UIA/EUnknown.h
 
 FORMS    += MainWindow.ui
