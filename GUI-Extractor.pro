@@ -20,7 +20,16 @@ SOURCES  += main.cpp \
     Highlighter.cpp \
     UIA/ElementFactory.cpp \
     UIA/EButton.cpp \
-    UIA/EUnknown.cpp
+    UIA/EUnknown.cpp \
+    UIA/ESlider.cpp \
+    UIA/EScrollBar.cpp \
+    UIA/ERadio.cpp \
+    UIA/EProgressBar.cpp \
+    UIA/EMenuItem.cpp \
+    UIA/EMenuBar.cpp \
+    UIA/EEdit.cpp \
+    UIA/EComboBox.cpp \
+    UIA/ECheckBox.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -32,6 +41,15 @@ HEADERS  += MainWindow.h \
     Highlighter.h \
     UIA/ElementFactory.h \
     UIA/EButton.h \
-    UIA/EUnknown.h
+    UIA/EUnknown.h \
+    UIA/ESlider.h \
+    UIA/EScrollBar.h \
+    UIA/ERadio.h \
+    UIA/EProgressBar.h \
+    UIA/EMenuItem.h \
+    UIA/EMenuBar.h \
+    UIA/EEdit.h \
+    UIA/EComboBox.h \
+    UIA/ECheckBox.h
 
 FORMS    += MainWindow.ui
