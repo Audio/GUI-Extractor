@@ -13,6 +13,7 @@ public:
 
 private:
   Highlighter(const Element* element);
+  void setArea(const ElementArea* area);
 
   static void destroyActiveInstance();
 
