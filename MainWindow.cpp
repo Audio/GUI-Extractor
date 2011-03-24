@@ -89,8 +89,11 @@ void MainWindow::highlightSelectedElement(QTreeWidgetItem* item)
 
 void MainWindow::createHighlightWindow(Element* element)
 {
-  Highlighter::highlight(element);
-  activateWindow();
+  const ElementArea* area = element->getArea();
+  if (area) {
+    Highlighter::highlight(area);
+    activateWindow();
+  }
 }
 
 void MainWindow::loadTopLevelWindows()

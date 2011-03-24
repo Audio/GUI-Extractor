@@ -5,17 +5,12 @@
 
 Highlighter* Highlighter::instance = NULL;
 
-void Highlighter::highlight(const Element* element)
+void Highlighter::highlight(const ElementArea* area)
 {
-  const ElementArea* area = element->getArea();
-
-  if (!area)
-    return;
-
   if (instance) {
     instance->setArea(area);
   } else {
-    instance = new Highlighter(element);
+    instance = new Highlighter(area);
     instance->show();
   }
 }
@@ -25,14 +20,14 @@ void Highlighter::hideActive()
   destroyActiveInstance();
 }
 
-Highlighter::Highlighter(const Element* element)
+Highlighter::Highlighter(const ElementArea* area)
   : QWidget()
 {
   setWindowTitle("Highlighter");
   setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
   setWindowOpacity(0.5);
 
-  setArea( element->getArea() );
+  setArea(area);
 }
 
 void Highlighter::setArea(const ElementArea* area)

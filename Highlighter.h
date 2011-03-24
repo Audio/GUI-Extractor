@@ -1,18 +1,18 @@
 #ifndef HIGHLIGHTER_H
 #define HIGHLIGHTER_H
 
-#include "UIA/Element.h"
+#include "UIA/ElementArea.h"
 #include <QtGui/QWidget>
 
 
 class Highlighter : public QWidget
 {
 public:
-  static void highlight(const Element* element);
+  static void highlight(const ElementArea* area);
   static void hideActive();
 
 private:
-  Highlighter(const Element* element);
+  Highlighter(const ElementArea* area);
   void setArea(const ElementArea* area);
 
   static void destroyActiveInstance();
