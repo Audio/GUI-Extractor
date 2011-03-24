@@ -4,6 +4,7 @@
 #include "UIA/Element.h"
 #include "ElementTreeItem.h"
 #include "TopWindowsItem.h"
+#include <QtGui/QCloseEvent>
 #include <QtGui/QMainWindow>
 
 
@@ -24,6 +25,9 @@ public:
 public slots:
   void logMessage(const QString& message);
 
+protected slots:
+  void closeEvent(QCloseEvent* event);
+
 private slots:
   Element* getSelectedTopLevelWindow() const;
   void analyzeSelectedWindow();
@@ -31,6 +35,7 @@ private slots:
 
   void highlightSelectedWindow(QListWidgetItem* item);
   void highlightSelectedElement(QTreeWidgetItem* item);
+  void createHighlightWindow(Element* element);
 
   void loadTopLevelWindows();
 

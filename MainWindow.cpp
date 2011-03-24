@@ -27,9 +27,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-  Highlighter::hideActive();
   disconnect(client, 0, 0, 0);
-
   delete ui;
   delete client;
 }
@@ -38,6 +36,12 @@ void MainWindow::logMessage(const QString& message)
 {
   qDebug() << message;
   ui->logArea->appendPlainText(message);
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+  Highlighter::hideActive();
+  event->accept();
 }
 
 Element* MainWindow::getSelectedTopLevelWindow() const
@@ -73,18 +77,20 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
 
 void MainWindow::highlightSelectedWindow(QListWidgetItem* item)
 {
-  if ( highlightWindows() ) {
-    Element* element = ((TopWindowsItem*) item)->getElement();
-    Highlighter::highlight(element);
-  }
+  if ( highlightWindows() )
+    createHighlightWindow( ((TopWindowsItem*) item)->getElement() );
 }
 
 void MainWindow::highlightSelectedElement(QTreeWidgetItem* item)
 {
-  if ( highlightElements() ) {
-    Element* element = ((ElementTreeItem*) item)->getElement();
-    Highlighter::highlight(element);
-  }
+  if ( highlightElements() )
+    createHighlightWindow( ((ElementTreeItem*) item)->getElement() );
+}
+
+void MainWindow::createHighlightWindow(Element* element)
+{
+  Highlighter::highlight(element);
+  activateWindow();
 }
 
 void MainWindow::loadTopLevelWindows()
