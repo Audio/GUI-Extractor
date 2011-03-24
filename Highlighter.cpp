@@ -8,8 +8,11 @@ Highlighter* Highlighter::instance = NULL;
 void Highlighter::highlight(const Element* element)
 {
   destroyActiveInstance();
-  instance = new Highlighter(element);
-  instance->show();
+
+  if ( element->getArea() ) {
+    instance = new Highlighter(element);
+    instance->show();
+  }
 }
 
 void Highlighter::hideActive()
