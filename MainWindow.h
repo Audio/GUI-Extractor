@@ -30,6 +30,7 @@ protected slots:
 
 private slots:
   Element* getSelectedTopLevelWindow() const;
+  Element* getSelectedElement() const;
   void analyzeSelectedWindow();
   void addToTreeIncludingChildren(Element* element, ElementTreeItem* parent = 0);
 

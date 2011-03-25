@@ -49,6 +49,13 @@ Element* MainWindow::getSelectedTopLevelWindow() const
                              : NULL;
 }
 
+Element* MainWindow::getSelectedElement() const
+{
+  QList<QTreeWidgetItem*> selected = ui->elementTree->selectedItems();
+  return ( selected.size() ) ? ((ElementTreeItem*) selected.first())->getElement()
+                             : NULL;
+}
+
 void MainWindow::analyzeSelectedWindow()
 {
   Element* element = getSelectedTopLevelWindow();
@@ -75,24 +82,16 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
 
 void MainWindow::highlightSelectedWindow()
 {
-  if ( highlightWindows() ) {
-    QList<QListWidgetItem*> items = ui->topWindows->selectedItems();
-    if ( items.size() ) {
-      TopWindowsItem* item = (TopWindowsItem*) items.first();
-      createHighlightWindow( item->getElement() );
-    }
-  }
+  Element* element = getSelectedTopLevelWindow();
+  if ( highlightWindows() && element )
+    createHighlightWindow(element);
 }
 
 void MainWindow::highlightSelectedElement()
 {
-  if ( highlightElements() ) {
-    QList<QTreeWidgetItem*> items = ui->elementTree->selectedItems();
-    if ( items.size() ) {
-      ElementTreeItem* item = (ElementTreeItem*) items.first();
-      createHighlightWindow( item->getElement() );
-    }
-  }
+  Element* element = getSelectedElement();
+  if ( highlightElements() && element )
+    createHighlightWindow(element);
 }
 
 void MainWindow::createHighlightWindow(Element* element)
