@@ -9,8 +9,6 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent), ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  ui->topWindows->setMouseTracking(true);
-  ui->elementTree->setMouseTracking(true);
   ui->elementTree->setColumnWidth(0, 300);
 
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
@@ -18,8 +16,8 @@ MainWindow::MainWindow(QWidget* parent)
   connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
   connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( loadTopLevelWindows() ));
   connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
-  connect(ui->topWindows, SIGNAL( itemEntered(QListWidgetItem*) ), SLOT( highlightSelectedWindow(QListWidgetItem*) ));
-  connect(ui->elementTree, SIGNAL( itemEntered(QTreeWidgetItem*, int) ), SLOT( highlightSelectedElement(QTreeWidgetItem*) ));
+  connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
+  connect(ui->elementTree, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedElement() ));
 
   client = new Client();
   connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
@@ -75,16 +73,26 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
     addToTreeIncludingChildren(child, item);
 }
 
-void MainWindow::highlightSelectedWindow(QListWidgetItem* item)
+void MainWindow::highlightSelectedWindow()
 {
-  if ( highlightWindows() )
-    createHighlightWindow( ((TopWindowsItem*) item)->getElement() );
+  if ( highlightWindows() ) {
+    QList<QListWidgetItem*> items = ui->topWindows->selectedItems();
+    if ( items.size() ) {
+      TopWindowsItem* item = (TopWindowsItem*) items.first();
+      createHighlightWindow( item->getElement() );
+    }
+  }
 }
 
-void MainWindow::highlightSelectedElement(QTreeWidgetItem* item)
+void MainWindow::highlightSelectedElement()
 {
-  if ( highlightElements() )
-    createHighlightWindow( ((ElementTreeItem*) item)->getElement() );
+  if ( highlightElements() ) {
+    QList<QTreeWidgetItem*> items = ui->elementTree->selectedItems();
+    if ( items.size() ) {
+      ElementTreeItem* item = (ElementTreeItem*) items.first();
+      createHighlightWindow( item->getElement() );
+    }
+  }
 }
 
 void MainWindow::createHighlightWindow(Element* element)

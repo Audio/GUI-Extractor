@@ -33,8 +33,8 @@ private slots:
   void analyzeSelectedWindow();
   void addToTreeIncludingChildren(Element* element, ElementTreeItem* parent = 0);
 
-  void highlightSelectedWindow(QListWidgetItem* item);
-  void highlightSelectedElement(QTreeWidgetItem* item);
+  void highlightSelectedWindow();
+  void highlightSelectedElement();
   void createHighlightWindow(Element* element);
 
   void loadTopLevelWindows();
