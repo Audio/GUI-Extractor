@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>927</width>
-    <height>646</height>
+    <width>913</width>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,177 +17,142 @@
    <string/>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextEdit" name="exportArea">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>220</y>
-      <width>431</width>
-      <height>261</height>
-     </rect>
-    </property>
-    <property name="html">
-     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;UsiXML:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&amp;lt;everything&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;  &amp;lt;nothing /&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;&amp;lt;/everyting&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="logArea">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>490</y>
-      <width>881</width>
-      <height>101</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>711</width>
-      <height>181</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Input</string>
-    </property>
-    <widget class="QListWidget" name="topWindows">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>561</width>
-       <height>131</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Top-Level Windows</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="buttonReload">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>50</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Reload list</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="buttonAnalyze">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>80</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Analyze selected</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>200</y>
-      <width>901</width>
-      <height>401</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Output</string>
-    </property>
-    <widget class="QTreeWidget" name="elementTree">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>441</width>
-       <height>261</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>Name</string>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QListWidget" name="topWindows"/>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>18</width>
+          <height>268</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="buttonReload">
+          <property name="minimumSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Reload list of top-level windows</string>
+          </property>
+          <property name="text">
+           <string>R</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="buttonAnalyze">
+          <property name="minimumSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Analyse selected window</string>
+          </property>
+          <property name="text">
+           <string>=&gt;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>18</width>
+          <height>268</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QTreeWidget" name="elementTree">
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPlainTextEdit" name="logArea">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Type</string>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>120</height>
+       </size>
       </property>
-     </column>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_3">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>10</y>
-      <width>181</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Auto-highlighting</string>
-    </property>
-    <widget class="QCheckBox" name="highlightWindows">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Selected windows</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="highlightElements">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>50</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Selected elements</string>
-     </property>
-    </widget>
-   </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>Highlighting</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionEnableHighlighting"/>
+   <addaction name="actionSelectHighlightingColor"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>927</width>
+     <width>913</width>
      <height>21</height>
     </rect>
    </property>
@@ -199,16 +164,10 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuExtract">
     <property name="title">
-     <string>Extract</string>
+     <string>Analyse</string>
     </property>
-    <addaction name="actionChooseProgram"/>
-   </widget>
-   <widget class="QMenu" name="menuExplore">
-    <property name="title">
-     <string>Explore</string>
-    </property>
-    <addaction name="actionElementCursor"/>
-    <addaction name="actionElementFocus"/>
+    <addaction name="actionSelectedWindow"/>
+    <addaction name="actionReloadWindowList"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -216,18 +175,16 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuExport">
+    <property name="title">
+     <string>Export</string>
+    </property>
+    <addaction name="actionExportXUL"/>
+   </widget>
    <addaction name="menuApplication"/>
    <addaction name="menuExtract"/>
-   <addaction name="menuExplore"/>
+   <addaction name="menuExport"/>
    <addaction name="menuHelp"/>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <action name="actionQuit">
    <property name="text">
@@ -237,37 +194,15 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionChooseProgram">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <action name="actionSelectedWindow">
    <property name="text">
-    <string>Choose program...</string>
+    <string>Selected window</string>
+   </property>
+   <property name="toolTip">
+    <string>Analyse selected window</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+R</string>
-   </property>
-  </action>
-  <action name="actionElementCursor">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Element under the cursor</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+D</string>
-   </property>
-  </action>
-  <action name="actionElementFocus">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Focused element</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+F</string>
+    <string>Ctrl+A</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -276,6 +211,41 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionEnableHighlighting">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable</string>
+   </property>
+   <property name="toolTip">
+    <string>Enable highlighting selected windows and elements</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionSelectHighlightingColor">
+   <property name="text">
+    <string>Select color</string>
+   </property>
+   <property name="toolTip">
+    <string>Color used when highlighting windows and elements</string>
+   </property>
+  </action>
+  <action name="actionExportXUL">
+   <property name="text">
+    <string>Save as XUL</string>
+   </property>
+  </action>
+  <action name="actionReloadWindowList">
+   <property name="text">
+    <string>Reload window list</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>

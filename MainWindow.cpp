@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent), ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  ui->elementTree->setColumnWidth(0, 300);
+  ui->elementTree->setColumnWidth(0, 250);
 
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
@@ -89,24 +89,22 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
 
 void MainWindow::highlightSelectedWindow()
 {
-  Element* element = getSelectedTopLevelWindow();
-  if ( highlightWindows() && element )
-    createHighlightWindow(element);
+  highlightIfEnabled( getSelectedTopLevelWindow() );
 }
 
 void MainWindow::highlightSelectedElement()
 {
-  Element* element = getSelectedElement();
-  if ( highlightElements() && element )
-    createHighlightWindow(element);
+  highlightIfEnabled( getSelectedElement() );
 }
 
-void MainWindow::createHighlightWindow(Element* element)
+void MainWindow::highlightIfEnabled(Element* element)
 {
-  const ElementArea* area = element->getArea();
-  if (area) {
-    Highlighter::highlight(area);
-    activateWindow();
+  if ( highlightingEnabled() && element ) {
+    const ElementArea* area = element->getArea();
+    if (area) {
+      Highlighter::highlight(area);
+      activateWindow();
+    }
   }
 }
 
@@ -122,12 +120,7 @@ void MainWindow::loadTopLevelWindows()
   }
 }
 
-bool MainWindow::highlightWindows() const
+bool MainWindow::highlightingEnabled() const
 {
-  return ui->highlightWindows->isChecked();
-}
-
-bool MainWindow::highlightElements() const
-{
-  return ui->highlightElements->isChecked();
+  return ui->actionEnableHighlighting->isChecked();
 }

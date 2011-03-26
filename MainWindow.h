@@ -38,12 +38,11 @@ private slots:
 
   void highlightSelectedWindow();
   void highlightSelectedElement();
-  void createHighlightWindow(Element* element);
+  void highlightIfEnabled(Element* element);
 
   void loadTopLevelWindows();
 
-  bool highlightWindows() const;
-  bool highlightElements() const;
+  bool highlightingEnabled() const;
 
 private:
   Ui::MainWindow* ui;
