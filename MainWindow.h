@@ -29,6 +29,8 @@ protected slots:
   void closeEvent(QCloseEvent* event);
 
 private slots:
+  bool isThisApplication(Element* element);
+
   Element* getSelectedTopLevelWindow() const;
   Element* getSelectedElement() const;
   void analyzeSelectedWindow();

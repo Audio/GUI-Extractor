@@ -42,6 +42,13 @@ void MainWindow::closeEvent(QCloseEvent* event)
   event->accept();
 }
 
+bool MainWindow::isThisApplication(Element* element)
+{
+  UIA_HWND elementId;
+  element->getUIAElement()->get_CurrentNativeWindowHandle(&elementId);
+  return winId() == elementId;
+}
+
 Element* MainWindow::getSelectedTopLevelWindow() const
 {
   QList<QListWidgetItem*> selected = ui->topWindows->selectedItems();
@@ -108,8 +115,10 @@ void MainWindow::loadTopLevelWindows()
   ui->topWindows->clear();
   QList<Element*> windows = client->topLevelWindows();
   foreach(Element* window, windows) {
-    TopWindowsItem* item = new TopWindowsItem(ui->topWindows, window);
-    ui->topWindows->addItem(item);
+    if ( !isThisApplication(window) ) {
+      TopWindowsItem* item = new TopWindowsItem(ui->topWindows, window);
+      ui->topWindows->addItem(item);
+    }
   }
 }
 
