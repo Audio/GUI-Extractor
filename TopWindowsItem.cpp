@@ -1,19 +1,8 @@
 #include "TopWindowsItem.h"
 
 
-TopWindowsItem::TopWindowsItem(QListWidget* parent, Element* topWindow)
-  : QListWidgetItem(parent)
+TopWindowsItem::TopWindowsItem(QTreeWidget* parent, Element* topWindow)
+  : ElementHolder(topWindow), QTreeWidgetItem(parent)
 {
-  element = topWindow;
-  setText( element->getName() );
-}
-
-TopWindowsItem::~TopWindowsItem()
-{
-  delete element;
-}
-
-Element* TopWindowsItem::getElement() const
-{
-  return element;
+  setText(0, element->getName() );
 }

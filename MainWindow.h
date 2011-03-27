@@ -29,6 +29,7 @@ protected slots:
   void closeEvent(QCloseEvent* event);
 
 private slots:
+  void setupUiConnections();
   bool isThisApplication(Element* element);
 
   Element* getSelectedTopLevelWindow() const;

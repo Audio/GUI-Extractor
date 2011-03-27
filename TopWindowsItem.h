@@ -1,20 +1,14 @@
 #ifndef TOPWINDOWSITEM_H
 #define TOPWINDOWSITEM_H
 
-#include "UIA/Element.h"
-#include <QtGui/QListWidgetItem>
+#include "ElementHolder.h"
+#include <QtGui/QTreeWidgetItem>
 
 
-class TopWindowsItem : public QListWidgetItem
+class TopWindowsItem : public ElementHolder, public QTreeWidgetItem
 {
 public:
-  TopWindowsItem(QListWidget* parent, Element* topWindow);
-  ~TopWindowsItem();
-
-  Element* getElement() const;
-
-private:
-  Element* element;
+  TopWindowsItem(QTreeWidget* parent, Element* topWindow);
 };
 
 #endif // TOPWINDOWSITEM_H

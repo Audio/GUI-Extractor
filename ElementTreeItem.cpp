@@ -2,30 +2,19 @@
 
 
 ElementTreeItem::ElementTreeItem(QTreeWidget* parent, Element* element)
-  : QTreeWidgetItem(parent)
+  : ElementHolder(element), QTreeWidgetItem(parent)
 {
-  initialize(element);
+  setDescription();
 }
 
 ElementTreeItem::ElementTreeItem(ElementTreeItem* parent, Element* element)
-  : QTreeWidgetItem(parent)
+  : ElementHolder(element), QTreeWidgetItem(parent)
 {
-  initialize(element);
+  setDescription();
 }
 
-ElementTreeItem::~ElementTreeItem()
+void ElementTreeItem::setDescription()
 {
-  delete element;
-}
-
-Element* ElementTreeItem::getElement() const
-{
-  return element;
-}
-
-void ElementTreeItem::initialize(Element* element)
-{
-  this->element = element;
   QString name = element->getName().isEmpty() ? "-" : element->getName();
 
   setText(0, name);

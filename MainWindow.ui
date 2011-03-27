@@ -21,7 +21,16 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QListWidget" name="topWindows"/>
+       <widget class="QTreeWidget" name="topWindows">
+        <property name="indentation">
+         <number>0</number>
+        </property>
+        <column>
+         <property name="text">
+          <string>Window name</string>
+         </property>
+        </column>
+       </widget>
       </item>
       <item>
        <spacer name="verticalSpacer">
@@ -101,7 +110,7 @@
        <widget class="QTreeWidget" name="elementTree">
         <column>
          <property name="text">
-          <string>Name</string>
+          <string>Element name</string>
          </property>
         </column>
         <column>

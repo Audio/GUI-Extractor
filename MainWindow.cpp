@@ -10,17 +10,26 @@ MainWindow::MainWindow(QWidget* parent)
 {
   ui->setupUi(this);
   ui->elementTree->setColumnWidth(0, 250);
+  setupUiConnections();
 
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
-  connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
-  connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( loadTopLevelWindows() ));
-  connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
-  connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
-  connect(ui->elementTree, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedElement() ));
-
   client = new Client();
   connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
+}
+
+void MainWindow::setupUiConnections()
+{
+  connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
+
+  connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( loadTopLevelWindows() ));
+  connect(ui->actionReloadWindowList, SIGNAL( triggered() ), SLOT( loadTopLevelWindows() ));
+
+  connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
+  connect(ui->actionSelectedWindow, SIGNAL( triggered() ), SLOT( analyzeSelectedWindow() ));
+
+  connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
+  connect(ui->elementTree, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedElement() ));
 }
 
 MainWindow::~MainWindow()
@@ -51,7 +60,7 @@ bool MainWindow::isThisApplication(Element* element)
 
 Element* MainWindow::getSelectedTopLevelWindow() const
 {
-  QList<QListWidgetItem*> selected = ui->topWindows->selectedItems();
+  QList<QTreeWidgetItem*> selected = ui->topWindows->selectedItems();
   return ( selected.size() ) ? ((TopWindowsItem*) selected.first())->getElement()
                              : NULL;
 }
@@ -113,10 +122,8 @@ void MainWindow::loadTopLevelWindows()
   ui->topWindows->clear();
   QList<Element*> windows = client->topLevelWindows();
   foreach(Element* window, windows) {
-    if ( !isThisApplication(window) ) {
-      TopWindowsItem* item = new TopWindowsItem(ui->topWindows, window);
-      ui->topWindows->addItem(item);
-    }
+    if ( !isThisApplication(window) )
+      new TopWindowsItem(ui->topWindows, window);
   }
 }
 

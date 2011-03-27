@@ -29,7 +29,8 @@ SOURCES  += main.cpp \
     UIA/EMenuBar.cpp \
     UIA/EEdit.cpp \
     UIA/EComboBox.cpp \
-    UIA/ECheckBox.cpp
+    UIA/ECheckBox.cpp \
+    ElementHolder.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -50,6 +51,7 @@ HEADERS  += MainWindow.h \
     UIA/EMenuBar.h \
     UIA/EEdit.h \
     UIA/EComboBox.h \
-    UIA/ECheckBox.h
+    UIA/ECheckBox.h \
+    ElementHolder.h
 
 FORMS    += MainWindow.ui
