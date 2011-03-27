@@ -39,7 +39,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>18</width>
+          <width>8</width>
           <height>268</height>
          </size>
         </property>
@@ -51,21 +51,28 @@
          <widget class="QPushButton" name="buttonReload">
           <property name="minimumSize">
            <size>
-            <width>48</width>
-            <height>48</height>
+            <width>40</width>
+            <height>40</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>48</width>
-            <height>48</height>
+            <width>40</width>
+            <height>40</height>
            </size>
           </property>
           <property name="toolTip">
            <string>Reload list of top-level windows</string>
           </property>
-          <property name="text">
-           <string>R</string>
+          <property name="icon">
+           <iconset resource="images/icons.qrc">
+            <normaloff>:/icons/reload</normaloff>:/icons/reload</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -73,21 +80,54 @@
          <widget class="QPushButton" name="buttonAnalyze">
           <property name="minimumSize">
            <size>
-            <width>48</width>
-            <height>48</height>
+            <width>40</width>
+            <height>40</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>48</width>
-            <height>48</height>
+            <width>40</width>
+            <height>40</height>
            </size>
           </property>
           <property name="toolTip">
            <string>Analyse selected window</string>
           </property>
-          <property name="text">
-           <string>=&gt;</string>
+          <property name="icon">
+           <iconset resource="images/icons.qrc">
+            <normaloff>:/icons/analyse</normaloff>:/icons/analyse</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="buttonExport">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="icon">
+           <iconset resource="images/icons.qrc">
+            <normaloff>:/icons/export</normaloff>:/icons/export</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -100,7 +140,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>18</width>
+          <width>8</width>
           <height>268</height>
          </size>
         </property>
@@ -259,6 +299,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="images/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -55,3 +55,6 @@ HEADERS  += MainWindow.h \
     ElementHolder.h
 
 FORMS    += MainWindow.ui
+
+RESOURCES += \
+    images/icons.qrc
