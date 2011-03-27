@@ -3,6 +3,7 @@
 #include "UIA/Client.h"
 #include "Highlighter.h"
 #include <QtCore/QtDebug>
+#include <QtGui/QColorDialog>
 
 
 MainWindow::MainWindow(QWidget* parent)
@@ -30,6 +31,8 @@ void MainWindow::setupUiConnections()
 
   connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
   connect(ui->elementTree, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedElement() ));
+
+  connect(ui->actionSelectHighlightingColor, SIGNAL( triggered() ), SLOT( setHighlightingColor() ));
 }
 
 MainWindow::~MainWindow()
@@ -130,4 +133,12 @@ void MainWindow::loadTopLevelWindows()
 bool MainWindow::highlightingEnabled() const
 {
   return ui->actionEnableHighlighting->isChecked();
+}
+
+void MainWindow::setHighlightingColor()
+{
+  QColor current = Highlighter::getColor();
+  QColor color = QColorDialog::getColor(current, this);
+  if ( color.isValid() )
+    Highlighter::setColor(color);
 }

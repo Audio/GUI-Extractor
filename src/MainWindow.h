@@ -44,6 +44,7 @@ private slots:
   void loadTopLevelWindows();
 
   bool highlightingEnabled() const;
+  void setHighlightingColor();
 
 private:
   Ui::MainWindow* ui;

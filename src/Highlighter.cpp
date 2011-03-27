@@ -4,6 +4,7 @@
 
 
 Highlighter* Highlighter::instance = NULL;
+QColor Highlighter::color = QColor(51, 102, 204);
 
 void Highlighter::highlight(const ElementArea* area)
 {
@@ -18,6 +19,16 @@ void Highlighter::highlight(const ElementArea* area)
 void Highlighter::hideActive()
 {
   destroyActiveInstance();
+}
+
+QColor Highlighter::getColor()
+{
+  return color;
+}
+
+void Highlighter::setColor(const QColor& newColor)
+{
+  color = newColor;
 }
 
 Highlighter::Highlighter(const ElementArea* area)
@@ -42,7 +53,7 @@ void Highlighter::setArea(const ElementArea* area)
 void Highlighter::paintEvent(QPaintEvent*)
 {
   QPainter painter(this);
-  painter.setBrush( QBrush( QColor(51, 102, 204, 255), Qt::SolidPattern ));
+  painter.setBrush( QBrush(color, Qt::SolidPattern ));
   painter.drawRect(0, 0, width, height);
 }
 

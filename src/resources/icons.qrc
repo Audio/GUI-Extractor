@@ -3,5 +3,7 @@
         <file>analyse.png</file>
         <file>export.png</file>
         <file>reload.png</file>
+        <file>color.png</file>
+        <file>highlight.png</file>
     </qresource>
 </RCC>

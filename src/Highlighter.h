@@ -3,6 +3,7 @@
 
 #include "UIA/ElementArea.h"
 #include <QtGui/QWidget>
+#include <QtGui/QColor>
 
 
 class Highlighter : public QWidget
@@ -10,6 +11,8 @@ class Highlighter : public QWidget
 public:
   static void highlight(const ElementArea* area);
   static void hideActive();
+  static QColor getColor();
+  static void setColor(const QColor& newColor);
 
 private:
   Highlighter(const ElementArea* area);
@@ -23,6 +26,7 @@ protected:
 
 private:
   static Highlighter* instance;
+  static QColor color;
   int width;
   int height;
 };
