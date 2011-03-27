@@ -65,8 +65,8 @@
            <string>Reload list of top-level windows</string>
           </property>
           <property name="icon">
-           <iconset resource="images/icons.qrc">
-            <normaloff>:/icons/reload</normaloff>:/icons/reload</iconset>
+           <iconset resource="resources/icons.qrc">
+            <normaloff>:/icons/reload.png</normaloff>:/icons/reload.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -94,8 +94,8 @@
            <string>Analyse selected window</string>
           </property>
           <property name="icon">
-           <iconset resource="images/icons.qrc">
-            <normaloff>:/icons/analyse</normaloff>:/icons/analyse</iconset>
+           <iconset resource="resources/icons.qrc">
+            <normaloff>:/icons/analyse.png</normaloff>:/icons/analyse.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -120,8 +120,8 @@
            </size>
           </property>
           <property name="icon">
-           <iconset resource="images/icons.qrc">
-            <normaloff>:/icons/export</normaloff>:/icons/export</iconset>
+           <iconset resource="resources/icons.qrc">
+            <normaloff>:/icons/export.png</normaloff>:/icons/export.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -300,7 +300,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="images/icons.qrc"/>
+  <include location="resources/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>analyse.png</file>
+        <file>export.png</file>
+        <file>reload.png</file>
+    </qresource>
+</RCC>
