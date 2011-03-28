@@ -10,6 +10,7 @@ void Highlighter::highlight(const ElementArea& area)
 {
   if (instance) {
     instance->setArea(area);
+    instance->show();
   } else {
     instance = new Highlighter(area);
     instance->show();

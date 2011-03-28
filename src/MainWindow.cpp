@@ -119,7 +119,6 @@ void MainWindow::highlightIfEnabled(Element* element)
     bool valid;
     ElementArea area = element->getArea(valid);
     if (valid) {
-      logMessage("hajlajtuju");
       Highlighter::highlight(area);
       activateWindow();
     }
