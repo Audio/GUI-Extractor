@@ -30,7 +30,9 @@ SOURCES  += main.cpp \
     UIA/EEdit.cpp \
     UIA/EComboBox.cpp \
     UIA/ECheckBox.cpp \
-    ElementHolder.cpp
+    ElementHolder.cpp \
+    XUL/Item.cpp \
+    XUL/Exporter.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -52,7 +54,9 @@ HEADERS  += MainWindow.h \
     UIA/EEdit.h \
     UIA/EComboBox.h \
     UIA/ECheckBox.h \
-    ElementHolder.h
+    ElementHolder.h \
+    XUL/Item.h \
+    XUL/Exporter.h
 
 FORMS    += MainWindow.ui
 

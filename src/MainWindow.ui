@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>GUI Extractor</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources/icons.qrc">
+    <normaloff>:/icons/application.png</normaloff>:/icons/application.png</iconset>
+  </property>
   <property name="accessibleName">
    <string/>
   </property>

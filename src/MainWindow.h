@@ -46,6 +46,8 @@ private slots:
   bool highlightingEnabled() const;
   void setHighlightingColor();
 
+  void exportXUL() const;
+
 private:
   Ui::MainWindow* ui;
   Client* client;

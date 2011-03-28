@@ -5,5 +5,6 @@
         <file>reload.png</file>
         <file>color.png</file>
         <file>highlight.png</file>
+        <file>application.png</file>
     </qresource>
 </RCC>

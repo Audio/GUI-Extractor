@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "UIA/Client.h"
 #include "Highlighter.h"
+#include "XUL/Exporter.h"
 #include <QtCore/QtDebug>
 #include <QtGui/QColorDialog>
 
@@ -28,6 +29,9 @@ void MainWindow::setupUiConnections()
 
   connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
   connect(ui->actionSelectedWindow, SIGNAL( triggered() ), SLOT( analyzeSelectedWindow() ));
+
+  connect(ui->buttonExport, SIGNAL( pressed() ), SLOT( exportXUL() ));
+  connect(ui->actionExportXUL, SIGNAL( triggered() ), SLOT( exportXUL() ));
 
   connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
   connect(ui->elementTree, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedElement() ));
@@ -141,4 +145,14 @@ void MainWindow::setHighlightingColor()
   QColor color = QColorDialog::getColor(current, this);
   if ( color.isValid() )
     Highlighter::setColor(color);
+}
+
+void MainWindow::exportXUL() const
+{
+  // TODO analyse must be complete to call this method
+  // TODO window must be selected and be the same for elementTree results
+
+  Element* topWindow = getSelectedTopLevelWindow();
+  XUL::Exporter* ex = new XUL::Exporter(topWindow, ui->elementTree);
+  ex->save("temporary_nothing");
 }

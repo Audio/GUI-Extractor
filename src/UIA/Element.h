@@ -4,6 +4,8 @@
 #include <QtCore/QString>
 #include "includes.h"
 #include "ElementArea.h"
+#include "XUL/Item.h"
+
 
 class ElementFactory;
 
@@ -17,13 +19,15 @@ protected:
 public:
   ~Element();
 
-public:
   const ElementArea* getArea() const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;
   virtual QString getType() = 0;
+  virtual XUL::Item* exportXUL() const;
 
 private:
+  void exportXULArea(XUL::Item* item) const;
+
   QString bstrToQString(BSTR& bstr);
 
   IUIAutomationElement* UIAElement;
