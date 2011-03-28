@@ -14,11 +14,12 @@ Element::~Element()
   qDebug() << "Memory for object " + cachedName + " released.";
 }
 
-const ElementArea* Element::getArea() const
+ElementArea Element::getArea(bool& valid) const
 {
   RECT rect;
   HRESULT hr = UIAElement->get_CurrentBoundingRectangle(&rect);
-  return SUCCEEDED(hr) ? new ElementArea(rect) : NULL;
+  valid = SUCCEEDED(hr);
+  return ElementArea(rect);
 }
 
 QString Element::getName()
@@ -47,11 +48,14 @@ XUL::Item* Element::exportXUL() const
 
 void Element::exportXULArea(XUL::Item* item) const
 {
-  const ElementArea* a = getArea();
-  item->setAttribute("top", QString::number( a->getTop() ));
-  item->setAttribute("left", QString::number( a->getLeft() ));
-  item->setAttribute("width", QString::number( a->getWidth() ));
-  item->setAttribute("height", QString::number( a->getHeight() ));
+  bool valid;
+  ElementArea a = getArea(valid);
+  if (valid) {
+    item->setAttribute("top", QString::number( a.getTop() ));
+    item->setAttribute("left", QString::number( a.getLeft() ));
+    item->setAttribute("width", QString::number( a.getWidth() ));
+    item->setAttribute("height", QString::number( a.getHeight() ));
+  }
 }
 
 QString Element::bstrToQString(BSTR& bstr)

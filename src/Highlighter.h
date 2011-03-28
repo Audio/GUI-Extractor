@@ -9,14 +9,14 @@
 class Highlighter : public QWidget
 {
 public:
-  static void highlight(const ElementArea* area);
+  static void highlight(const ElementArea& area);
   static void hideActive();
   static QColor getColor();
   static void setColor(const QColor& newColor);
 
 private:
-  Highlighter(const ElementArea* area);
-  void setArea(const ElementArea* area);
+  Highlighter(const ElementArea& area);
+  void setArea(const ElementArea& area);
 
   static void destroyActiveInstance();
 

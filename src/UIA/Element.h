@@ -19,7 +19,7 @@ protected:
 public:
   ~Element();
 
-  const ElementArea* getArea() const;
+  ElementArea getArea(bool& valid) const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;
   virtual QString getType() = 0;

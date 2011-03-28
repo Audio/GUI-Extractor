@@ -6,7 +6,7 @@
 Highlighter* Highlighter::instance = NULL;
 QColor Highlighter::color = QColor(51, 102, 204);
 
-void Highlighter::highlight(const ElementArea* area)
+void Highlighter::highlight(const ElementArea& area)
 {
   if (instance) {
     instance->setArea(area);
@@ -31,7 +31,7 @@ void Highlighter::setColor(const QColor& newColor)
   color = newColor;
 }
 
-Highlighter::Highlighter(const ElementArea* area)
+Highlighter::Highlighter(const ElementArea& area)
   : QWidget()
 {
   setWindowTitle("Highlighter");
@@ -41,12 +41,12 @@ Highlighter::Highlighter(const ElementArea* area)
   setArea(area);
 }
 
-void Highlighter::setArea(const ElementArea* area)
+void Highlighter::setArea(const ElementArea& area)
 {
-  this->width = area->getWidth();
-  this->height = area->getHeight();
+  this->width = area.getWidth();
+  this->height = area.getHeight();
 
-  move( area->getLeft(), area->getTop() );
+  move( area.getLeft(), area.getTop() );
   resize(width, height);
 }
 

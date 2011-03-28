@@ -116,8 +116,10 @@ void MainWindow::highlightSelectedElement()
 void MainWindow::highlightIfEnabled(Element* element)
 {
   if ( highlightingEnabled() && element ) {
-    const ElementArea* area = element->getArea();
-    if (area) {
+    bool valid;
+    ElementArea area = element->getArea(valid);
+    if (valid) {
+      logMessage("hajlajtuju");
       Highlighter::highlight(area);
       activateWindow();
     }
