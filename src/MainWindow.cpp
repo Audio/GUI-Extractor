@@ -5,6 +5,7 @@
 #include "XUL/Exporter.h"
 #include <QtCore/QtDebug>
 #include <QtGui/QColorDialog>
+#include <QtGui/QFileDialog>
 
 
 MainWindow::MainWindow(QWidget* parent)
@@ -30,7 +31,6 @@ void MainWindow::setupUiConnections()
   connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
   connect(ui->actionSelectedWindow, SIGNAL( triggered() ), SLOT( analyzeSelectedWindow() ));
 
-  connect(ui->buttonExport, SIGNAL( pressed() ), SLOT( exportXUL() ));
   connect(ui->actionExportXUL, SIGNAL( triggered() ), SLOT( exportXUL() ));
 
   connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
@@ -148,12 +148,18 @@ void MainWindow::setHighlightingColor()
     Highlighter::setColor(color);
 }
 
-void MainWindow::exportXUL() const
+void MainWindow::exportXUL()
 {
-  // TODO analyse must be complete to call this method
-  // TODO window must be selected and be the same for elementTree results
+  if ( ui->elementTree->topLevelItemCount() == 0 )
+    return logMessage("Nothing to export: an analysis must be done before exporting anything.");
+
+  // TODO a window must be selected and be the same for elementTree results
+
+  QString filename = QFileDialog::getSaveFileName(this, tr("Export in XUL format"), QString(), tr("XUL files (*.xul)") );
+  if ( filename.isEmpty() )
+    return;
 
   Element* topWindow = getSelectedTopLevelWindow();
   XUL::Exporter* ex = new XUL::Exporter(topWindow, ui->elementTree);
-  ex->save("temporary_nothing");
+  ex->save(filename);
 }

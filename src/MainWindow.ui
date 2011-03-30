@@ -109,32 +109,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="buttonExport">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="icon">
-           <iconset resource="resources/icons.qrc">
-            <normaloff>:/icons/export.png</normaloff>:/icons/export.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
@@ -186,7 +160,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>Highlighting</string>
+    <string>Toolbar</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -209,6 +183,7 @@
    <addaction name="actionEnableHighlighting"/>
    <addaction name="actionSelectHighlightingColor"/>
    <addaction name="separator"/>
+   <addaction name="actionExportXUL"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -307,8 +282,18 @@
    </property>
   </action>
   <action name="actionExportXUL">
+   <property name="icon">
+    <iconset resource="resources/icons.qrc">
+     <normaloff>:/icons/export.png</normaloff>:/icons/export.png</iconset>
+   </property>
    <property name="text">
     <string>Save as XUL</string>
+   </property>
+   <property name="toolTip">
+    <string>Export GUI description in XUL format</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="actionReloadWindowList">
