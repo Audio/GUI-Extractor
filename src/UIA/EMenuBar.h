@@ -8,7 +8,8 @@ class EMenuBar : public Element
 {
 public:
   EMenuBar(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
+  XUL::Item* exportXUL() const;
 };
 
 #endif // EMENUBAR_H

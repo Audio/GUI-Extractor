@@ -6,7 +6,7 @@ EMenuItem::EMenuItem(IUIAutomationElement* element)
 {
 }
 
-QString EMenuItem::getType()
+QString EMenuItem::getType() const
 {
   return "menu item";
 }

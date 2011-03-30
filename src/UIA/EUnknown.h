@@ -7,8 +7,8 @@
 class EUnknown : public Element
 {
 public:
-    EUnknown(IUIAutomationElement* element);
-    QString getType();
+  EUnknown(IUIAutomationElement* element);
+  inline QString getType() const;
 };
 
 #endif // EUnknown_H

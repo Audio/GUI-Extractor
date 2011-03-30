@@ -8,7 +8,7 @@ class ESlider : public Element
 {
 public:
   ESlider(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // ESLIDER_H

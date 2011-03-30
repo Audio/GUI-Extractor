@@ -6,7 +6,7 @@ EButton::EButton(IUIAutomationElement* element)
 {
 }
 
-QString EButton::getType()
+QString EButton::getType() const
 {
   return "button";
 }

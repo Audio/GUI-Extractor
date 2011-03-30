@@ -6,7 +6,14 @@ EMenuBar::EMenuBar(IUIAutomationElement* element)
 {
 }
 
-QString EMenuBar::getType()
+QString EMenuBar::getType() const
 {
   return "menubar";
+}
+
+XUL::Item* EMenuBar::exportXUL() const
+{
+  XUL::Item* item = new XUL::Item("menubar");
+  exportXULArea(item);
+  return item;
 }

@@ -22,10 +22,10 @@ public:
   ElementArea getArea(bool& valid) const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;
-  virtual QString getType() = 0;
+  virtual inline QString getType() const = 0;
   virtual XUL::Item* exportXUL() const;
 
-private:
+protected:
   void exportXULArea(XUL::Item* item) const;
 
   QString bstrToQString(BSTR& bstr);

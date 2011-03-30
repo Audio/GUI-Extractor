@@ -6,7 +6,7 @@ ESlider::ESlider(IUIAutomationElement* element)
 {
 }
 
-QString ESlider::getType()
+QString ESlider::getType() const
 {
   return "slider";
 }

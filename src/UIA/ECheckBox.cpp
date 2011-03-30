@@ -6,7 +6,7 @@ ECheckBox::ECheckBox(IUIAutomationElement* element)
 {
 }
 
-QString ECheckBox::getType()
+QString ECheckBox::getType() const
 {
   return "check box";
 }

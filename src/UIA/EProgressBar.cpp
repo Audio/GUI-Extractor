@@ -6,7 +6,7 @@ EProgressBar::EProgressBar(IUIAutomationElement* element)
 {
 }
 
-QString EProgressBar::getType()
+QString EProgressBar::getType() const
 {
   return "progress bar";
 }

@@ -8,7 +8,7 @@ class EComboBox : public Element
 {
 public:
   EComboBox(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // ECOMBOBOX_H

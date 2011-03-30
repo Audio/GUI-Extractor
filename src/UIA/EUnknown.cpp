@@ -6,7 +6,7 @@ EUnknown::EUnknown(IUIAutomationElement* element)
 {
 }
 
-QString EUnknown::getType()
+QString EUnknown::getType() const
 {
   return "unknown";
 }

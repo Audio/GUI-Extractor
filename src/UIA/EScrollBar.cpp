@@ -6,7 +6,7 @@ EScrollBar::EScrollBar(IUIAutomationElement* element)
 {
 }
 
-QString EScrollBar::getType()
+QString EScrollBar::getType() const
 {
   return "scrollbar";
 }

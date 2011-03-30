@@ -8,7 +8,7 @@ class EScrollBar : public Element
 {
 public:
   EScrollBar(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // ESCROLLBAR_H

@@ -8,7 +8,7 @@ class EEdit : public Element
 {
 public:
   EEdit(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // EEDIT_H

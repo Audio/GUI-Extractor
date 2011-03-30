@@ -6,7 +6,7 @@ ERadio::ERadio(IUIAutomationElement* element)
 {
 }
 
-QString ERadio::getType()
+QString ERadio::getType() const
 {
   return "radio";
 }

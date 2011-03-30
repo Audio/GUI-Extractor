@@ -8,7 +8,7 @@ class EButton : public Element
 {
 public:
   EButton(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // EBUTTON_H

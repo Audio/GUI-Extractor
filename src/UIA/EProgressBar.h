@@ -8,7 +8,7 @@ class EProgressBar : public Element
 {
 public:
   EProgressBar(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // EPROGRESSBAR_H

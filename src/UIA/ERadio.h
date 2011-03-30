@@ -8,7 +8,7 @@ class ERadio : public Element
 {
 public:
   ERadio(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // ERADIO_H

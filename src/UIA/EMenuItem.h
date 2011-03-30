@@ -8,7 +8,7 @@ class EMenuItem : public Element
 {
 public:
   EMenuItem(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // EMENUITEM_H

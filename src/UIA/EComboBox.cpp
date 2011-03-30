@@ -6,7 +6,7 @@ EComboBox::EComboBox(IUIAutomationElement* element)
 {
 }
 
-QString EComboBox::getType()
+QString EComboBox::getType() const
 {
   return "combo box";
 }

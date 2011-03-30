@@ -6,7 +6,7 @@ EEdit::EEdit(IUIAutomationElement* element)
 {
 }
 
-QString EEdit::getType()
+QString EEdit::getType() const
 {
   return "edit";
 }

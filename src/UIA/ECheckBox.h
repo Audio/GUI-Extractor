@@ -8,7 +8,7 @@ class ECheckBox : public Element
 {
 public:
   ECheckBox(IUIAutomationElement* element);
-  QString getType();
+  inline QString getType() const;
 };
 
 #endif // ECHECKBOX_H
