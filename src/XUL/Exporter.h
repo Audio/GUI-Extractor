@@ -20,8 +20,11 @@ namespace XUL {
     void saveToFile(const QString& filename);
 
     void elementDataToXml(const ElementTreeItem* element, int indent);
-    QString getStartTag(const XUL::Item* item, int indent) const;
+    QString getStartTag(const XUL::Item* item, int indent, bool close = false) const;
     QString getIndentText(int indent) const;
+
+    QString getWindowBeginTag() const;
+    inline QString getWindowEndTag() const;
 
     inline QString getHeaderVersion() const;
     inline QString getHeaderStylesheet() const;

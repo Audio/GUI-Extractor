@@ -20,6 +20,7 @@ public:
   ~Element();
 
   ElementArea getArea(bool& valid) const;
+  QString getCachedName() const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;
   virtual inline QString getType() const = 0;

@@ -16,8 +16,7 @@ void Exporter::save(const QString& filename)
   xml.append( getHeaderStylesheet() );
   xml.append( QString() );
 
-  // TODO begin of window element
-  xml.append("<window>");
+  xml.append( getWindowBeginTag() );
 
   int topLevels = tree->topLevelItemCount();
   for (int i = 0; i < topLevels; ++i) {
@@ -25,8 +24,7 @@ void Exporter::save(const QString& filename)
     elementDataToXml(topItem, 1);
   }
 
-  // TODO end of window element
-  xml.append("</window>");
+  xml.append( getWindowEndTag() );
 
   saveToFile(filename);
 }
@@ -42,7 +40,7 @@ void Exporter::saveToFile(const QString& filename)
   QTextStream out(&file);
   QListIterator<QString> it(xml);
   while ( it.hasNext() )
-    out << it.next() << "\r\n";
+    out << it.next() << "\n";
 
   file.close();
 }
@@ -50,16 +48,18 @@ void Exporter::saveToFile(const QString& filename)
 void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
 {
   XUL::Item* item = treeItem->getElement()->exportXUL();
-  xml.append( getStartTag(item, indent) );
-
   int children = treeItem->childCount();
-  for (int i = 0; i < children; ++i)
-    elementDataToXml( (ElementTreeItem*) treeItem->child(i), ++indent );
 
-  xml.append("</" + item->getName() + ">");
+  xml.append( getStartTag(item, indent, children == 0) );
+
+  for (int i = 0; i < children; ++i)
+    elementDataToXml( (ElementTreeItem*) treeItem->child(i), indent + 1 );
+
+  if (children > 0)
+    xml.append( getIndentText(indent) + "</" + item->getName() + ">" );
 }
 
-QString Exporter::getStartTag(const XUL::Item* item, int indent) const
+QString Exporter::getStartTag(const XUL::Item* item, int indent, bool close) const
 {
   QString tag = getIndentText(indent);
   tag +="<" + item->getName();
@@ -72,13 +72,27 @@ QString Exporter::getStartTag(const XUL::Item* item, int indent) const
     tag += " " + it.key() + "=\"" + it.value() + "\"";
   }
 
-  return tag += ">";
+  tag += (close) ? " />" : ">";
+  return tag;
 }
 
 QString Exporter::getIndentText(int indent) const
 {
   QString whitespaces;
-  return whitespaces.fill(' ', indent);
+  return whitespaces.fill(' ', indent * 2);
+}
+
+QString Exporter::getWindowBeginTag() const
+{
+  XUL::Item w("window");
+  w.setAttribute("xmlns", "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+  w.setAttribute("title", window->getCachedName() );
+  return getStartTag(&w, 0);
+}
+
+QString Exporter::getWindowEndTag() const
+{
+  return "</window>";
 }
 
 QString Exporter::getHeaderVersion() const

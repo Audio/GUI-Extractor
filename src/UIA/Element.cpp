@@ -22,6 +22,11 @@ ElementArea Element::getArea(bool& valid) const
   return ElementArea(rect);
 }
 
+QString Element::getCachedName() const
+{
+  return cachedName;
+}
+
 QString Element::getName()
 {
   if ( cachedName.isEmpty() ) {
