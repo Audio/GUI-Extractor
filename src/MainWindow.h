@@ -44,6 +44,7 @@ private slots:
   void loadTopLevelWindows();
 
   bool highlightingEnabled() const;
+  void highlightingEnabledChanged(bool enabled);
   void setHighlightingColor();
 
   void exportXUL();

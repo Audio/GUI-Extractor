@@ -36,6 +36,7 @@ void MainWindow::setupUiConnections()
   connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
   connect(ui->elementTree, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedElement() ));
 
+  connect(ui->actionEnableHighlighting, SIGNAL( toggled(bool) ), SLOT( highlightingEnabledChanged(bool) ));
   connect(ui->actionSelectHighlightingColor, SIGNAL( triggered() ), SLOT( setHighlightingColor() ));
 }
 
@@ -138,6 +139,12 @@ void MainWindow::loadTopLevelWindows()
 bool MainWindow::highlightingEnabled() const
 {
   return ui->actionEnableHighlighting->isChecked();
+}
+
+void MainWindow::highlightingEnabledChanged(bool enabled)
+{
+  if (!enabled)
+    Highlighter::hideActive();
 }
 
 void MainWindow::setHighlightingColor()
