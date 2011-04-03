@@ -32,7 +32,35 @@ SOURCES  += main.cpp \
     UIA/ECheckBox.cpp \
     ElementHolder.cpp \
     XUL/Item.cpp \
-    XUL/Exporter.cpp
+    XUL/Exporter.cpp \
+    UIA/EWindow.cpp \
+    UIA/ETreeItem.cpp \
+    UIA/ETree.cpp \
+    UIA/EToolTip.cpp \
+    UIA/EToolBar.cpp \
+    UIA/ETitleBar.cpp \
+    UIA/EThumb.cpp \
+    UIA/ETable.cpp \
+    UIA/ETabItem.cpp \
+    UIA/ETab.cpp \
+    UIA/EStatusBar.cpp \
+    UIA/ESplitButton.cpp \
+    UIA/ESeparator.cpp \
+    UIA/EPane.cpp \
+    UIA/EListItem.cpp \
+    UIA/EList.cpp \
+    UIA/EImage.cpp \
+    UIA/EHyperlink.cpp \
+    UIA/EHeaderItem.cpp \
+    UIA/EHeader.cpp \
+    UIA/EGroup.cpp \
+    UIA/EDocument.cpp \
+    UIA/EDataItem.cpp \
+    UIA/EDataGrid.cpp \
+    UIA/ECalendar.cpp \
+    UIA/EMenu.cpp \
+    UIA/ESpinner.cpp \
+    UIA/EText.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -56,7 +84,35 @@ HEADERS  += MainWindow.h \
     UIA/ECheckBox.h \
     ElementHolder.h \
     XUL/Item.h \
-    XUL/Exporter.h
+    XUL/Exporter.h \
+    UIA/EImage.h \
+    UIA/EHyperlink.h \
+    UIA/EHeaderItem.h \
+    UIA/EHeader.h \
+    UIA/EGroup.h \
+    UIA/EDocument.h \
+    UIA/EDataItem.h \
+    UIA/EDataGrid.h \
+    UIA/ECalendar.h \
+    UIA/EWindow.h \
+    UIA/ETreeItem.h \
+    UIA/ETree.h \
+    UIA/EToolTip.h \
+    UIA/EToolBar.h \
+    UIA/ETitleBar.h \
+    UIA/EThumb.h \
+    UIA/ETable.h \
+    UIA/ETabItem.h \
+    UIA/ETab.h \
+    UIA/EStatusBar.h \
+    UIA/ESplitButton.h \
+    UIA/ESeparator.h \
+    UIA/EPane.h \
+    UIA/EListItem.h \
+    UIA/EList.h \
+    UIA/EMenu.h \
+    UIA/ESpinner.h \
+    UIA/EText.h
 
 FORMS    += MainWindow.ui
 
