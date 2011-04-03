@@ -24,10 +24,10 @@ public:
   QString getName();
   IUIAutomationElement* getUIAElement() const;
   virtual inline QString getType() const = 0;
-  virtual XUL::Item* exportXUL() const;
+  virtual XUL::Item* exportXUL(int diffLeft, int diffTop) const;
 
 protected:
-  void exportXULArea(XUL::Item* item) const;
+  void exportXULArea(XUL::Item* item, int diffLeft, int diffTop) const;
 
   QString bstrToQString(BSTR& bstr);
 

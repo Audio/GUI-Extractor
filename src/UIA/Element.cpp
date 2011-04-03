@@ -44,20 +44,20 @@ IUIAutomationElement* Element::getUIAElement() const
   return UIAElement;
 }
 
-XUL::Item* Element::exportXUL() const
+XUL::Item* Element::exportXUL(int diffLeft, int diffTop) const
 {
   XUL::Item* item = new XUL::Item("spacer");
-  exportXULArea(item);
+  exportXULArea(item, diffLeft, diffTop);
   return item;
 }
 
-void Element::exportXULArea(XUL::Item* item) const
+void Element::exportXULArea(XUL::Item* item, int diffLeft, int diffTop) const
 {
   bool valid;
   ElementArea a = getArea(valid);
   if (valid) {
-    item->setAttribute("top", QString::number( a.getTop() ));
-    item->setAttribute("left", QString::number( a.getLeft() ));
+    item->setAttribute("top", QString::number( a.getTop() - diffTop ));
+    item->setAttribute("left", QString::number( a.getLeft() - diffLeft ));
     item->setAttribute("width", QString::number( a.getWidth() ));
     item->setAttribute("height", QString::number( a.getHeight() ));
   }

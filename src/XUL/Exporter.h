@@ -18,6 +18,7 @@ namespace XUL {
 
   private:
     void saveToFile(const QString& filename);
+    void setRelativeWindowPositon();
 
     void elementDataToXml(const ElementTreeItem* element, int indent);
     QString getStartTag(const XUL::Item* item, int indent, bool close = false) const;
@@ -30,6 +31,9 @@ namespace XUL {
     inline QString getHeaderStylesheet() const;
 
     const Element* window;
+    int windowPositionLeft;
+    int windowPositionTop;
+
     const QTreeWidget* tree;
     QList<QString> xml;
   };

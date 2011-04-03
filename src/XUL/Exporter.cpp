@@ -12,6 +12,8 @@ Exporter::Exporter(const Element* window, const QTreeWidget* elementTree)
 
 void Exporter::save(const QString& filename)
 {
+  setRelativeWindowPositon();
+
   xml.append( getHeaderVersion() );
   xml.append( getHeaderStylesheet() );
   xml.append( QString() );
@@ -45,9 +47,17 @@ void Exporter::saveToFile(const QString& filename)
   file.close();
 }
 
+void Exporter::setRelativeWindowPositon()
+{
+  bool valid;
+  ElementArea a = window->getArea(valid);
+  windowPositionLeft = valid ? a.getLeft() : 0;
+  windowPositionTop = valid ? a.getTop() : 0;
+}
+
 void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
 {
-  XUL::Item* item = treeItem->getElement()->exportXUL();
+  XUL::Item* item = treeItem->getElement()->exportXUL(windowPositionLeft, windowPositionTop);
   int children = treeItem->childCount();
 
   xml.append( getStartTag(item, indent, children == 0) );
