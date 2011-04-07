@@ -82,6 +82,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="buttonAnalyze">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -240,6 +243,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionSelectedWindow">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Selected window</string>
    </property>
@@ -289,6 +295,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionExportXUL">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources/icons.qrc">
      <normaloff>:/icons/export.png</normaloff>:/icons/export.png</iconset>

@@ -37,6 +37,7 @@ void MainWindow::setupUiConnections()
   connect(ui->actionExportXUL, SIGNAL( triggered() ), SLOT( exportXUL() ));
 
   connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedWindow() ));
+  connect(ui->topWindows, SIGNAL( itemSelectionChanged() ), SLOT( enableDisableAnalysis() ));
   connect(ui->elementTree, SIGNAL( itemSelectionChanged() ), SLOT( highlightSelectedElement() ));
 
   connect(ui->actionEnableHighlighting, SIGNAL( toggled(bool) ), SLOT( highlightingEnabledChanged(bool) ));
@@ -73,6 +74,13 @@ bool MainWindow::isThisApplication(Element* element)
   return winId() == elementId;
 }
 
+void MainWindow::enableDisableAnalysis()
+{
+  bool selected = getSelectedTopLevelWindow() != NULL;
+  ui->actionSelectedWindow->setEnabled(selected);
+  ui->buttonAnalyze->setEnabled(selected);
+}
+
 Element* MainWindow::getSelectedTopLevelWindow() const
 {
   QList<QTreeWidgetItem*> selected = ui->topWindows->selectedItems();
@@ -90,9 +98,6 @@ Element* MainWindow::getSelectedElement() const
 void MainWindow::analyzeSelectedWindow()
 {
   Element* element = getSelectedTopLevelWindow();
-  if (!element)
-    return logMessage( tr("No window has been selected for analysis"), Log::WARNING);
-
   logMessage( tr("Analyzing: ") + element->getName() );
   ui->elementTree->clear();
 
@@ -101,6 +106,7 @@ void MainWindow::analyzeSelectedWindow()
     addToTreeIncludingChildren(child);
 
   analyzedWindow = element;
+  ui->actionExportXUL->setEnabled(true);
 }
 
 void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* parent)
@@ -115,6 +121,8 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
 
 void MainWindow::highlightSelectedWindow()
 {
+  ui->actionSelectedWindow->setEnabled(true);
+  ui->buttonAnalyze->setEnabled(true);
   highlightIfEnabled( getSelectedTopLevelWindow() );
 }
 
@@ -138,6 +146,8 @@ void MainWindow::highlightIfEnabled(Element* element)
 void MainWindow::loadTopLevelWindows()
 {
   ui->topWindows->clear();
+  ui->elementTree->clear();
+  ui->actionExportXUL->setEnabled(false);
   QList<Element*> windows = client->topLevelWindows();
   foreach(Element* window, windows) {
     if ( !isThisApplication(window) )
@@ -170,9 +180,6 @@ void MainWindow::setHighlightingColor()
 
 void MainWindow::exportXUL()
 {
-  if (!analyzedWindow)
-    return logMessage( tr("Nothing to export: an analysis must be done before exporting anything."), Log::WARNING);
-
   if ( analyzedWindow->isOffScreen() ) {
     logMessage( tr("Warning: exporting hidden window can lead to unpredicteable results."), Log::WARNING);
     QString warn = tr("Selected windows is hidden. This can lead to unpredicteable results. Do you really want to run analysis for that window?");

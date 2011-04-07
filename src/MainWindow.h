@@ -33,6 +33,7 @@ private slots:
   void setupUiConnections();
   bool isThisApplication(Element* element);
 
+  void enableDisableAnalysis();
   Element* getSelectedTopLevelWindow() const;
   Element* getSelectedElement() const;
   void analyzeSelectedWindow();
