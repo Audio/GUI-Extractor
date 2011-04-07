@@ -20,6 +20,7 @@ public:
   ~Element();
 
   ElementArea getArea(bool& valid) const;
+  bool isOffScreen() const;
   QString getCachedName() const;
   QString getName();
   IUIAutomationElement* getUIAElement() const;

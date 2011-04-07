@@ -7,6 +7,7 @@
 #include <QtCore/QTime>
 #include <QtGui/QColorDialog>
 #include <QtGui/QFileDialog>
+#include <QtGui/QMessageBox>
 
 
 MainWindow::MainWindow(QWidget* parent)
@@ -89,9 +90,9 @@ void MainWindow::analyzeSelectedWindow()
 {
   Element* element = getSelectedTopLevelWindow();
   if (!element)
-    return logMessage("No window has been selected for analysis", Log::WARNING);
+    return logMessage( tr("No window has been selected for analysis"), Log::WARNING);
 
-  logMessage("Analyzing: " + element->getName() );
+  logMessage( tr("Analyzing: ") + element->getName() );
   ui->elementTree->clear();
 
   QList<Element*> children = client->getImmediateChildren(element);
@@ -169,7 +170,15 @@ void MainWindow::setHighlightingColor()
 void MainWindow::exportXUL()
 {
   if (!analyzedWindow)
-    return logMessage("Nothing to export: an analysis must be done before exporting anything.", Log::WARNING);
+    return logMessage( tr("Nothing to export: an analysis must be done before exporting anything."), Log::WARNING);
+
+  if ( analyzedWindow->isOffScreen() ) {
+    logMessage("Warning: exporting hidden window can lead to unpredicteable results.", Log::WARNING);
+    QString warn = tr("Selected windows is hidden. This can lead to unpredicteable results. Do you really want to run analysis for that window?");
+    int button = QMessageBox::warning(this, tr("Hidden application"), warn, tr("Continue"), tr("Abort"), QString(), 1);
+    if (button != 0)
+      return;
+  }
 
   QString filename = QFileDialog::getSaveFileName(this, tr("Export in XUL format"), QString(), tr("XUL files (*.xul)") );
   if ( filename.isEmpty() )

@@ -12,7 +12,7 @@ Exporter::Exporter(const Element* window, const QTreeWidget* elementTree)
 
 void Exporter::save(const QString& filename)
 {
-  emit eventHappened("Export is running, please wait...");
+  emit eventHappened( tr("Export is running, please wait...") );
 
   setRelativeWindowPositon();
   insertDocumentStartTags();
@@ -31,7 +31,7 @@ void Exporter::saveToFile(const QString& filename)
 {
   QFile file(filename);
   if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) ) {
-    emit eventHappened("Export: cannot write to the selected file " + filename, Log::WARNING);
+    emit eventHappened( tr("Export: cannot write to the selected file ") + filename, Log::WARNING);
     return;
   }
 
@@ -41,7 +41,7 @@ void Exporter::saveToFile(const QString& filename)
     out << it.next() << "\n";
 
   file.close();
-  emit eventHappened("Export completed");
+  emit eventHappened( tr("Export completed") );
 }
 
 void Exporter::setRelativeWindowPositon()

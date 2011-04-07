@@ -22,6 +22,13 @@ ElementArea Element::getArea(bool& valid) const
   return ElementArea(rect);
 }
 
+bool Element::isOffScreen() const
+{
+  BOOL offScreen;
+  HRESULT hr = UIAElement->get_CurrentIsOffscreen(&offScreen);
+  return SUCCEEDED(hr) && offScreen;
+}
+
 QString Element::getCachedName() const
 {
   return cachedName;
