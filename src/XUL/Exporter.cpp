@@ -31,7 +31,7 @@ void Exporter::saveToFile(const QString& filename)
 {
   QFile file(filename);
   if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) ) {
-    emit eventHappened("Export: cannot write to the selected file " + filename);
+    emit eventHappened("Export: cannot write to the selected file " + filename, Log::WARNING);
     return;
   }
 

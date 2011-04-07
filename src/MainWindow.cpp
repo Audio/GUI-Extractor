@@ -4,12 +4,13 @@
 #include "Highlighter.h"
 #include "XUL/Exporter.h"
 #include <QtCore/QtDebug>
+#include <QtCore/QTime>
 #include <QtGui/QColorDialog>
 #include <QtGui/QFileDialog>
 
 
 MainWindow::MainWindow(QWidget* parent)
-  : QMainWindow(parent), ui(new Ui::MainWindow)
+  : QMainWindow(parent), ui(new Ui::MainWindow), analyzedWindow(NULL)
 {
   ui->setupUi(this);
   ui->elementTree->setColumnWidth(0, 250);
@@ -47,10 +48,14 @@ MainWindow::~MainWindow()
   delete client;
 }
 
-void MainWindow::logMessage(const QString& message)
+void MainWindow::logMessage(const QString& message, Log::Type logType)
 {
-  qDebug() << message;
-  ui->logArea->appendPlainText(message);
+  QString time = "[" + QTime::currentTime().toString("HH:mm:ss") + "] ";
+  qDebug() << time + message;
+
+  QString color = colorBaseOnLogType(logType);
+  QString formattedMessage = time + "<span style=\"color:" + color + "\">" + message + "</span>";
+  ui->logArea->append(formattedMessage);
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -84,7 +89,7 @@ void MainWindow::analyzeSelectedWindow()
 {
   Element* element = getSelectedTopLevelWindow();
   if (!element)
-    return logMessage("No window has been selected for analysis");
+    return logMessage("No window has been selected for analysis", Log::WARNING);
 
   logMessage("Analyzing: " + element->getName() );
   ui->elementTree->clear();
@@ -92,6 +97,8 @@ void MainWindow::analyzeSelectedWindow()
   QList<Element*> children = client->getImmediateChildren(element);
   foreach(Element* child, children)
     addToTreeIncludingChildren(child);
+
+  analyzedWindow = element;
 }
 
 void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* parent)
@@ -161,18 +168,23 @@ void MainWindow::setHighlightingColor()
 
 void MainWindow::exportXUL()
 {
-  if ( ui->elementTree->topLevelItemCount() == 0 )
-    return logMessage("Nothing to export: an analysis must be done before exporting anything.");
-
-  // TODO a window must be selected and be the same for elementTree results
+  if (!analyzedWindow)
+    return logMessage("Nothing to export: an analysis must be done before exporting anything.", Log::WARNING);
 
   QString filename = QFileDialog::getSaveFileName(this, tr("Export in XUL format"), QString(), tr("XUL files (*.xul)") );
   if ( filename.isEmpty() )
     return;
 
-  Element* topWindow = getSelectedTopLevelWindow();
-  XUL::Exporter ex(topWindow, ui->elementTree);
-  connect(&ex, SIGNAL( eventHappened(const QString&)), SLOT( logMessage(const QString&) ));
+  XUL::Exporter ex(analyzedWindow, ui->elementTree);
+  connect(&ex, SIGNAL( eventHappened(const QString&, Log::Type)), SLOT( logMessage(const QString&, Log::Type) ));
   ex.save(filename);
   disconnect(&ex, 0, 0, 0);
+}
+
+QString MainWindow::colorBaseOnLogType(Log::Type logType) const
+{
+  switch (logType) {
+    case Log::WARNING: return "red";
+    default: return "black";
+  }
 }

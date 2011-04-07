@@ -112,7 +112,8 @@ HEADERS  += MainWindow.h \
     UIA/EList.h \
     UIA/EMenu.h \
     UIA/ESpinner.h \
-    UIA/EText.h
+    UIA/EText.h \
+    LogType.h
 
 FORMS    += MainWindow.ui
 

@@ -4,6 +4,7 @@
 #include "UIA/Element.h"
 #include "ElementTreeItem.h"
 #include "TopWindowsItem.h"
+#include "LogType.h"
 #include <QtGui/QCloseEvent>
 #include <QtGui/QMainWindow>
 
@@ -23,7 +24,7 @@ public:
   ~MainWindow();
 
 public slots:
-  void logMessage(const QString& message);
+  void logMessage(const QString& message, Log::Type logType = Log::NORMAL);
 
 protected slots:
   void closeEvent(QCloseEvent* event);
@@ -49,9 +50,12 @@ private slots:
 
   void exportXUL();
 
+  QString colorBaseOnLogType(Log::Type logType) const;
+
 private:
   Ui::MainWindow* ui;
   Client* client;
+  Element* analyzedWindow;
 };
 
 #endif // MAINWINDOW_H

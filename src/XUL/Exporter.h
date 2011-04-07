@@ -2,6 +2,7 @@
 #define EXPORTER_H
 
 #include "ElementTreeItem.h"
+#include "LogType.h"
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtGui/QTreeWidget>
@@ -19,7 +20,7 @@ namespace XUL {
     void save(const QString& filename);
 
   signals:
-    void eventHappened(const QString&);
+    void eventHappened(const QString&, Log::Type = Log::NORMAL);
 
   private:
     void saveToFile(const QString& filename);
