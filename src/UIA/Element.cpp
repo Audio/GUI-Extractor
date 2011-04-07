@@ -46,7 +46,7 @@ IUIAutomationElement* Element::getUIAElement() const
 
 XUL::Item* Element::exportXUL(int diffLeft, int diffTop) const
 {
-  XUL::Item* item = new XUL::Item("spacer");
+  XUL::Item* item = new XUL::Item("stack");
   exportXULArea(item, diffLeft, diffTop);
   return item;
 }

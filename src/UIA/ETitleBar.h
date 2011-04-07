@@ -9,6 +9,7 @@ class ETitleBar : public Element
 public:
   ETitleBar(IUIAutomationElement* element);
   inline QString getType() const;
+  XUL::Item* exportXUL(int, int) const;
 };
 
 #endif // ETITLEBAR_H

@@ -13,21 +13,15 @@ Exporter::Exporter(const Element* window, const QTreeWidget* elementTree)
 void Exporter::save(const QString& filename)
 {
   setRelativeWindowPositon();
-
-  xml.append( getHeaderVersion() );
-  xml.append( getHeaderStylesheet() );
-  xml.append( QString() );
-
-  xml.append( getWindowBeginTag() );
+  insertDocumentStartTags();
 
   int topLevels = tree->topLevelItemCount();
   for (int i = 0; i < topLevels; ++i) {
     ElementTreeItem* topItem = (ElementTreeItem*) tree->topLevelItem(i);
-    elementDataToXml(topItem, 1);
+    elementDataToXml(topItem, 2);
   }
 
-  xml.append( getWindowEndTag() );
-
+  insertDocumentEndTags();
   saveToFile(filename);
 }
 
@@ -58,7 +52,13 @@ void Exporter::setRelativeWindowPositon()
 void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
 {
   XUL::Item* item = treeItem->getElement()->exportXUL(windowPositionLeft, windowPositionTop);
+  if (item == XUL_NO_EXPORT)
+    return;
+
   int children = treeItem->childCount();
+
+  if ( isEmptyElementAndHasNoChildren( item->getName(), children) )
+    return;
 
   xml.append( getStartTag(item, indent, children == 0) );
 
@@ -92,25 +92,29 @@ QString Exporter::getIndentText(int indent) const
   return whitespaces.fill(' ', indent * 2);
 }
 
-QString Exporter::getWindowBeginTag() const
+void Exporter::insertDocumentStartTags()
 {
+  xml.append("<?xml version=\"1.0\"?>");
+  xml.append("<?xml-stylesheet href=\"chrome://global/skin/\" type=\"text/css\"?>");
+  xml.append( QString() );
+
   XUL::Item w("window");
   w.setAttribute("xmlns", "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
   w.setAttribute("title", window->getCachedName() );
-  return getStartTag(&w, 0);
+  xml.append( getStartTag(&w, 0) );
+
+  QString stackStart = getIndentText(1) + "<stack>";
+  xml.append(stackStart);
 }
 
-QString Exporter::getWindowEndTag() const
+void Exporter::insertDocumentEndTags()
 {
-  return "</window>";
+  QString stackEnd = getIndentText(1) + "</stack>";
+  xml.append(stackEnd);
+  xml.append("</window>");
 }
 
-QString Exporter::getHeaderVersion() const
+bool Exporter::isEmptyElementAndHasNoChildren(const QString& elementName, int childrenCount) const
 {
-  return "<?xml version=\"1.0\"?>";
-}
-
-QString Exporter::getHeaderStylesheet() const
-{
-  return "<?xml-stylesheet href=\"chrome://global/skin/\" type=\"text/css\"?>";
+  return elementName == "stack" && childrenCount == 0;
 }
