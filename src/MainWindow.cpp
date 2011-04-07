@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget* parent)
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
   client = new Client();
-  connect(client, SIGNAL( error(const QString&) ), SLOT( logMessage(const QString&) ));
+  connect(client, SIGNAL( eventHappened(const QString&, Log::Type) ), SLOT( logMessage(const QString&, Log::Type) ));
+  client->init();
 }
 
 void MainWindow::setupUiConnections()
@@ -173,7 +174,7 @@ void MainWindow::exportXUL()
     return logMessage( tr("Nothing to export: an analysis must be done before exporting anything."), Log::WARNING);
 
   if ( analyzedWindow->isOffScreen() ) {
-    logMessage("Warning: exporting hidden window can lead to unpredicteable results.", Log::WARNING);
+    logMessage( tr("Warning: exporting hidden window can lead to unpredicteable results."), Log::WARNING);
     QString warn = tr("Selected windows is hidden. This can lead to unpredicteable results. Do you really want to run analysis for that window?");
     int button = QMessageBox::warning(this, tr("Hidden application"), warn, tr("Continue"), tr("Abort"), QString(), 1);
     if (button != 0)

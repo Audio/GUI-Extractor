@@ -1,11 +1,12 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include "includes.h"
+#include "Element.h"
+#include "LogType.h"
 #include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QString>
-#include "includes.h"
-#include "Element.h"
 
 
 class Client : public QObject
@@ -16,12 +17,13 @@ public:
   Client();
   ~Client();
 
+  void init();
   Element* getRootElement();
   QList<Element*> getImmediateChildren(Element* parent);
   QList<Element*> topLevelWindows();
 
 signals:
-  void error(const QString& message);
+  void eventHappened(const QString&, Log::Type = Log::NORMAL);
 
 private:
   IUIAutomation* UIA;

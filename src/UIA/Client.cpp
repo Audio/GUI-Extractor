@@ -3,21 +3,26 @@
 
 
 Client::Client()
+  : UIA(NULL)
 {
-  CoInitialize(NULL);
-  HRESULT hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**) &UIA);
-
-  if ( FAILED(hr) )
-    emit error("Initialization of UIA Failed");
-  else
-    emit error("UIA instance has been successfuly created");
 }
 
 Client::~Client()
 {
   UIA->Release();
   CoUninitialize();
-  emit error("UIA instance has been deallocated");
+  emit eventHappened( tr("UI Automation has been disabled.") );
+}
+
+void Client::init()
+{
+  CoInitialize(NULL);
+  HRESULT hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**) &UIA);
+
+  if ( FAILED(hr) )
+    emit eventHappened( tr("Initialization of UI Automation has failed."), Log::WARNING );
+  else
+    emit eventHappened( tr("UI Automation has been initialized.") );
 }
 
 Element* Client::getRootElement()
@@ -25,7 +30,7 @@ Element* Client::getRootElement()
   IUIAutomationElement* root = NULL;
   HRESULT hr = UIA->GetRootElement(&root);
   if ( FAILED(hr) || !root ) {
-    emit error("Cannot obtain root element");
+    emit eventHappened( tr("Cannot obtain the Desktop element."), Log::WARNING );
     if (root)
       root->Release();
 
@@ -41,10 +46,8 @@ QList<Element*> Client::getImmediateChildren(Element* parent)
 
   IUIAutomationTreeWalker* walker = NULL;
   UIA->get_RawViewWalker(&walker);
-  if (!walker) {
-    emit error("Cannot obtaion viewWallker in getImmediateChildren()");
+  if (!walker)
     return children;
-  }
 
   IUIAutomationElement* element;
   walker->GetFirstChildElement( parent->getUIAElement(), &element );
