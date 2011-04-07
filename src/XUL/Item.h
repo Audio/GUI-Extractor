@@ -21,7 +21,7 @@ namespace XUL {
     QMap<QString, QString> attributes;
   };
 
-  const int XUL_NO_EXPORT = 0;
+  const int NO_EXPORT = 0;
 
 }
 

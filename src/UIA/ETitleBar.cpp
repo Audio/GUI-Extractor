@@ -13,5 +13,5 @@ QString ETitleBar::getType() const
 
 XUL::Item* ETitleBar::exportXUL(int, int) const
 {
-  return XUL::XUL_NO_EXPORT;
+  return XUL::NO_EXPORT;
 }

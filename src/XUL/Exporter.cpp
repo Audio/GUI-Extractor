@@ -55,7 +55,7 @@ void Exporter::setRelativeWindowPositon()
 void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
 {
   XUL::Item* item = treeItem->getElement()->exportXUL(windowPositionLeft, windowPositionTop);
-  if (item == XUL_NO_EXPORT)
+  if (item == XUL::NO_EXPORT)
     return;
 
   int children = treeItem->childCount();
@@ -70,6 +70,8 @@ void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
 
   if (children > 0)
     xml.append( getIndentText(indent) + "</" + item->getName() + ">" );
+
+  delete item;
 }
 
 QString Exporter::getStartTag(const XUL::Item* item, int indent, bool close) const
