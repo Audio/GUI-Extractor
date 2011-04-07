@@ -145,6 +145,10 @@ void MainWindow::highlightingEnabledChanged(bool enabled)
 {
   if (!enabled)
     Highlighter::hideActive();
+  else if ( ui->topWindows->hasFocus() )
+    highlightSelectedWindow();
+  else if( ui->elementTree->hasFocus() )
+    highlightSelectedElement();
 }
 
 void MainWindow::setHighlightingColor()
