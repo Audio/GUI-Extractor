@@ -167,6 +167,8 @@ void MainWindow::exportXUL()
     return;
 
   Element* topWindow = getSelectedTopLevelWindow();
-  XUL::Exporter* ex = new XUL::Exporter(topWindow, ui->elementTree);
-  ex->save(filename);
+  XUL::Exporter ex(topWindow, ui->elementTree);
+  connect(&ex, SIGNAL( eventHappened(const QString&)), SLOT( logMessage(const QString&) ));
+  ex.save(filename);
+  disconnect(&ex, 0, 0, 0);
 }

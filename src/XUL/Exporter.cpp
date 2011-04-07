@@ -1,17 +1,19 @@
 #include "Exporter.h"
 #include <QtCore/QFile>
-#include <QDebug>
+#include <QtCore/QTextStream>
 
 
 using namespace XUL;
 
 Exporter::Exporter(const Element* window, const QTreeWidget* elementTree)
-  : window(window), tree(elementTree)
+  : QObject(), window(window), tree(elementTree)
 {
 }
 
 void Exporter::save(const QString& filename)
 {
+  emit eventHappened("Export is running, please wait...");
+
   setRelativeWindowPositon();
   insertDocumentStartTags();
 
@@ -29,7 +31,7 @@ void Exporter::saveToFile(const QString& filename)
 {
   QFile file(filename);
   if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) ) {
-    qDebug().nospace() << "Export: cannot write to the selected file!" << filename;
+    emit eventHappened("Export: cannot write to the selected file " + filename);
     return;
   }
 
@@ -39,6 +41,7 @@ void Exporter::saveToFile(const QString& filename)
     out << it.next() << "\n";
 
   file.close();
+  emit eventHappened("Export completed");
 }
 
 void Exporter::setRelativeWindowPositon()

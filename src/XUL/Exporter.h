@@ -9,12 +9,17 @@
 
 namespace XUL {
 
-  class Exporter
+  class Exporter : public QObject
   {
+    Q_OBJECT
+
   public:
     Exporter(const Element* window, const QTreeWidget* elementTree);
 
     void save(const QString& filename);
+
+  signals:
+    void eventHappened(const QString&);
 
   private:
     void saveToFile(const QString& filename);
