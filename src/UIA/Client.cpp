@@ -11,7 +11,7 @@ Client::~Client()
 {
   UIA->Release();
   CoUninitialize();
-  emit eventHappened( tr("UI Automation has been disabled.") );
+  emit eventHappened( tr("UI Automation has been disabled") );
 }
 
 void Client::init()
@@ -20,9 +20,9 @@ void Client::init()
   HRESULT hr = CoCreateInstance(__uuidof(CUIAutomation), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUIAutomation), (void**) &UIA);
 
   if ( FAILED(hr) )
-    emit eventHappened( tr("Initialization of UI Automation has failed."), Log::WARNING );
+    emit eventHappened( tr("Initialization of UI Automation has failed"), Log::WARNING );
   else
-    emit eventHappened( tr("UI Automation has been initialized.") );
+    emit eventHappened( tr("UI Automation has been initialized") );
 }
 
 Element* Client::getRootElement()
@@ -30,7 +30,7 @@ Element* Client::getRootElement()
   IUIAutomationElement* root = NULL;
   HRESULT hr = UIA->GetRootElement(&root);
   if ( FAILED(hr) || !root ) {
-    emit eventHappened( tr("Cannot obtain the Desktop element."), Log::WARNING );
+    emit eventHappened( tr("Cannot obtain the Desktop element"), Log::WARNING );
     if (root)
       root->Release();
 
