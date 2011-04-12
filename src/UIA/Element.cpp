@@ -46,6 +46,19 @@ QString Element::getName()
   return cachedName;
 }
 
+QString Element::getOrientation() const
+{
+  OrientationType ori;
+  HRESULT hr = UIAElement->get_CurrentOrientation(&ori);
+
+  if ( SUCCEEDED(hr) && ori == OrientationType_Horizontal)
+    return "horizontal";
+  else if ( SUCCEEDED(hr) && ori == OrientationType_Vertical)
+    return "vertical";
+  else
+    return "unknown";
+}
+
 IUIAutomationElement* Element::getUIAElement() const
 {
   return UIAElement;
@@ -54,17 +67,19 @@ IUIAutomationElement* Element::getUIAElement() const
 XUL::Item* Element::exportXUL(int diffLeft, int diffTop) const
 {
   XUL::Item* item = new XUL::Item("stack");
-  exportXULArea(item, diffLeft, diffTop);
+  exportXULArea(item, diffLeft, diffTop, true);
   return item;
 }
 
-void Element::exportXULArea(XUL::Item* item, int diffLeft, int diffTop) const
+void Element::exportXULArea(XUL::Item* item, int diffLeft, int diffTop, bool noDiff) const
 {
   bool valid;
   ElementArea a = getArea(valid);
   if (valid) {
-    item->setAttribute("top", QString::number( a.getTop() - diffTop ));
-    item->setAttribute("left", QString::number( a.getLeft() - diffLeft ));
+    int top = (noDiff) ? 0 :  a.getTop() - diffTop;
+    int left = (noDiff) ? 0 : a.getLeft() - diffLeft;
+    item->setAttribute("top", QString::number(top) );
+    item->setAttribute("left", QString::number(left) );
     item->setAttribute("width", QString::number( a.getWidth() ));
     item->setAttribute("height", QString::number( a.getHeight() ));
   }

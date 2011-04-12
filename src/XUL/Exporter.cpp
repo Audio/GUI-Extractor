@@ -52,7 +52,7 @@ void Exporter::saveStylesFile(const QString& originalFilename)
   QString destination = fi.absolutePath() + "/gui_ex.css";
   bool ok = QFile::copy(":/styles/gui_ex.css", destination);
 
-  if (!ok)
+  if (!ok && !QFile::exists(destination) )
     emit eventHappened( tr("XUL export: cannot save the styles file"), Log::WARNING );
 }
 
@@ -67,15 +67,26 @@ void Exporter::setRelativeWindowPositon()
 void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
 {
   XUL::Item* item = treeItem->getElement()->exportXUL(windowPositionLeft, windowPositionTop);
-  if (item == XUL::NO_EXPORT)
+  if (item == XUL::NO_EXPORT) {
+    delete item;
     return;
+  }
 
   int children = treeItem->childCount();
 
-  if ( isEmptyElementAndHasNoChildren( item->getName(), children) )
+  if ( isEmptyElementAndHasNoChildren( item->getName(), children) ) {
+    delete item;
     return;
+  }
 
-  xml.append( getStartTag(item, indent, children == 0) );
+  bool ignoreChildren = treeItem->getElement()->ignoreChildren();
+
+  xml.append( getStartTag(item, indent, children == 0 || ignoreChildren) );
+
+  if (ignoreChildren) {
+    delete item;
+    return;
+  }
 
   for (int i = 0; i < children; ++i)
     elementDataToXml( (ElementTreeItem*) treeItem->child(i), indent + 1 );
@@ -133,6 +144,5 @@ void Exporter::insertDocumentEndTags()
 
 bool Exporter::isEmptyElementAndHasNoChildren(const QString& elementName, int childrenCount) const
 {
-  return false;
-  // return elementName == "stack" && childrenCount == 0;
+  return elementName == "stack" && childrenCount == 0;
 }

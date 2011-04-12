@@ -23,12 +23,14 @@ public:
   bool isOffScreen() const;
   QString getCachedName() const;
   QString getName();
+  QString getOrientation() const;
   IUIAutomationElement* getUIAElement() const;
+  virtual inline bool ignoreChildren() const { return false; };
   virtual inline QString getType() const = 0;
   virtual XUL::Item* exportXUL(int diffLeft, int diffTop) const;
 
 protected:
-  void exportXULArea(XUL::Item* item, int diffLeft, int diffTop) const;
+  void exportXULArea(XUL::Item* item, int diffLeft, int diffTop, bool noDiff = false) const;
 
   QString bstrToQString(BSTR& bstr);
 
