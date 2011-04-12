@@ -1,5 +1,6 @@
 #include "Highlighter.h"
 #include <QtGui/QBrush>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QPainter>
 
 
@@ -40,6 +41,12 @@ Highlighter::Highlighter(const ElementArea& area)
   setWindowOpacity(0.5);
 
   setArea(area);
+  showCloseButtonIfNeeded();
+}
+
+Highlighter::~Highlighter()
+{
+   delete closeButton;
 }
 
 void Highlighter::setArea(const ElementArea& area)
@@ -49,6 +56,22 @@ void Highlighter::setArea(const ElementArea& area)
 
   move( area.getLeft(), area.getTop() );
   resize(width, height);
+}
+
+void Highlighter::showCloseButtonIfNeeded()
+{
+  closeButton = new QPushButton( QIcon(":/icons/close.png"), QString(), this );
+  closeButton->setIconSize( QSize(16, 16) );
+  closeButton->setMaximumSize(16, 16);
+  closeButton->setToolTip( tr("Close highlighter") );
+
+  connect(closeButton, SIGNAL( clicked() ), SLOT( close() ));
+
+  QHBoxLayout* lay = new QHBoxLayout(this);
+  lay->addWidget(closeButton);
+  setLayout(lay);
+
+  closeButton->setVisible(width > 200 && height > 100);
 }
 
 void Highlighter::paintEvent(QPaintEvent*)

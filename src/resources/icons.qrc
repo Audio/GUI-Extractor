@@ -6,5 +6,6 @@
         <file>color.png</file>
         <file>highlight.png</file>
         <file>application.png</file>
+        <file>close.png</file>
     </qresource>
 </RCC>

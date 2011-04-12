@@ -4,6 +4,8 @@
 #include "UIA/ElementArea.h"
 #include <QtGui/QWidget>
 #include <QtGui/QColor>
+#include <QtGui/QPushButton>
+
 
 
 class Highlighter : public QWidget
@@ -16,7 +18,9 @@ public:
 
 private:
   Highlighter(const ElementArea& area);
+  ~Highlighter();
   void setArea(const ElementArea& area);
+  void showCloseButtonIfNeeded();
 
   static void destroyActiveInstance();
 
@@ -27,6 +31,7 @@ protected:
 private:
   static Highlighter* instance;
   static QColor color;
+  QPushButton* closeButton;
   int width;
   int height;
 };
