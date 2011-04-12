@@ -24,6 +24,7 @@ namespace XUL {
 
   private:
     void saveToFile(const QString& filename);
+    void saveStylesFile(const QString& originalFilename);
     void setRelativeWindowPositon();
 
     void elementDataToXml(const ElementTreeItem* element, int indent);

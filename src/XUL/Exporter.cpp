@@ -1,5 +1,6 @@
 #include "Exporter.h"
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtCore/QTextStream>
 
 
@@ -25,6 +26,7 @@ void Exporter::save(const QString& filename)
 
   insertDocumentEndTags();
   saveToFile(filename);
+  saveStylesFile(filename);
 }
 
 void Exporter::saveToFile(const QString& filename)
@@ -42,6 +44,16 @@ void Exporter::saveToFile(const QString& filename)
 
   file.close();
   emit eventHappened( tr("XUL export completed!") );
+}
+
+void Exporter::saveStylesFile(const QString& originalFilename)
+{
+  QFileInfo fi(originalFilename);
+  QString destination = fi.absolutePath() + "/gui_ex.css";
+  bool ok = QFile::copy(":/styles/gui_ex.css", destination);
+
+  if (!ok)
+    emit eventHappened( tr("XUL export: cannot save the styles file"), Log::WARNING );
 }
 
 void Exporter::setRelativeWindowPositon()
@@ -99,8 +111,8 @@ QString Exporter::getIndentText(int indent) const
 
 void Exporter::insertDocumentStartTags()
 {
-  xml.append("<?xml version=\"1.0\"?>");
-  xml.append("<?xml-stylesheet href=\"chrome://global/skin/\" type=\"text/css\"?>");
+  xml.append("<?xml version=\"1.0\" encoding=\"windows-1250\"?>");
+  xml.append("<?xml-stylesheet href=\"gui_ex.css\" type=\"text/css\"?>");
   xml.append( QString() );
 
   XUL::Item w("window");
@@ -121,5 +133,6 @@ void Exporter::insertDocumentEndTags()
 
 bool Exporter::isEmptyElementAndHasNoChildren(const QString& elementName, int childrenCount) const
 {
-  return elementName == "stack" && childrenCount == 0;
+  return false;
+  // return elementName == "stack" && childrenCount == 0;
 }

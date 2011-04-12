@@ -1,0 +1,11 @@
+/*
+  @import url(chrome://global/skin/)
+*/
+
+button {
+  min-width: 0;
+}
+
+spacer.image {
+  background-color: #69e;
+}
