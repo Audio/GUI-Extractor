@@ -67,32 +67,21 @@ void Exporter::setRelativeWindowPositon()
 void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
 {
   XUL::Item* item = treeItem->getElement()->exportXUL(windowPositionLeft, windowPositionTop);
-  if (item == XUL::NO_EXPORT) {
+  if (item == XUL::NO_EXPORT ||  isEmptyElementAndHasNoChildren( item->getName(), treeItem->childCount() )) {
     delete item;
     return;
   }
 
-  int children = treeItem->childCount();
+  const int CHILDREN_COUNT = treeItem->childCount();
+  const bool EXPORT_CHILDREN = treeItem->getElement()->ignoreChildren() == false && CHILDREN_COUNT > 0;
+  xml.append( getStartTag(item, indent, !EXPORT_CHILDREN) );
 
-  if ( isEmptyElementAndHasNoChildren( item->getName(), children) ) {
-    delete item;
-    return;
-  }
+  if (EXPORT_CHILDREN) {
+    for (int i = 0; i < CHILDREN_COUNT; ++i)
+      elementDataToXml( (ElementTreeItem*) treeItem->child(i), indent + 1 );
 
-  bool ignoreChildren = treeItem->getElement()->ignoreChildren();
-
-  xml.append( getStartTag(item, indent, children == 0 || ignoreChildren) );
-
-  if (ignoreChildren) {
-    delete item;
-    return;
-  }
-
-  for (int i = 0; i < children; ++i)
-    elementDataToXml( (ElementTreeItem*) treeItem->child(i), indent + 1 );
-
-  if (children > 0)
     xml.append( getIndentText(indent) + "</" + item->getName() + ">" );
+  }
 
   delete item;
 }
