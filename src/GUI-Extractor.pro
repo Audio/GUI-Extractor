@@ -61,7 +61,8 @@ SOURCES  += main.cpp \
     UIA/EMenu.cpp \
     UIA/ESpinner.cpp \
     UIA/EText.cpp \
-    XUL/MenuExporter.cpp
+    XUL/MenuExporter.cpp \
+    AboutDialog.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -115,9 +116,11 @@ HEADERS  += MainWindow.h \
     UIA/ESpinner.h \
     UIA/EText.h \
     LogType.h \
-    XUL/MenuExporter.h
+    XUL/MenuExporter.h \
+    AboutDialog.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    AboutDialog.ui
 
 RESOURCES += resources/icons.qrc \
     resources/styles.qrc

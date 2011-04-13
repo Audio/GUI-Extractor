@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "UIA/Client.h"
 #include "Highlighter.h"
+#include "AboutDialog.h"
 #include <QtCore/QtDebug>
 #include <QtCore/QTime>
 #include <QtGui/QColorDialog>
@@ -41,6 +42,8 @@ void MainWindow::setupUiConnections()
 
   connect(ui->actionEnableHighlighting, SIGNAL( toggled(bool) ), SLOT( highlightingEnabledChanged(bool) ));
   connect(ui->actionSelectHighlightingColor, SIGNAL( triggered() ), SLOT( setHighlightingColor() ));
+
+  connect(ui->actionAbout, SIGNAL( triggered() ), SLOT( displayAboutDialog() ));
 }
 
 MainWindow::~MainWindow()
@@ -212,4 +215,12 @@ QString MainWindow::colorBaseOnLogType(Log::Type logType) const
     case Log::WARNING: return "red";
     default: return "black";
   }
+}
+
+void MainWindow::displayAboutDialog()
+{
+  AboutDialog* d = new AboutDialog(this);
+  d->setModal(true);
+  d->setFixedSize(400, 200);
+  d->show();
 }

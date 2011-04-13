@@ -55,6 +55,8 @@ private slots:
 
   QString colorBaseOnLogType(Log::Type logType) const;
 
+  void displayAboutDialog();
+
 private:
   Ui::MainWindow* ui;
   Client* client;
