@@ -23,6 +23,11 @@ void Highlighter::hideActive()
   destroyActiveInstance();
 }
 
+bool Highlighter::isCurrentlyVisible()
+{
+  return instance && instance->isVisible();
+}
+
 QColor Highlighter::getColor()
 {
   return color;
@@ -31,6 +36,10 @@ QColor Highlighter::getColor()
 void Highlighter::setColor(const QColor& newColor)
 {
   color = newColor;
+  if ( isCurrentlyVisible() ) {
+    instance->close();
+    instance->show();
+  }
 }
 
 Highlighter::Highlighter(const ElementArea& area)

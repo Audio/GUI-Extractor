@@ -13,12 +13,14 @@ class Highlighter : public QWidget
 public:
   static void highlight(const ElementArea& area);
   static void hideActive();
+  static bool isCurrentlyVisible();
   static QColor getColor();
   static void setColor(const QColor& newColor);
 
 private:
   Highlighter(const ElementArea& area);
   ~Highlighter();
+
   void setArea(const ElementArea& area);
   void createCloseButton();
   void showCloseButtonIfNeeded();
