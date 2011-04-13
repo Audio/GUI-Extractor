@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "UIA/Element.h"
+#include "XUL/Exporter.h"
 #include "ElementTreeItem.h"
 #include "TopWindowsItem.h"
 #include "LogType.h"
@@ -50,6 +51,7 @@ private slots:
   void setHighlightingColor();
 
   void exportXUL();
+  void exportXULComplete();
 
   QString colorBaseOnLogType(Log::Type logType) const;
 
@@ -57,6 +59,7 @@ private:
   Ui::MainWindow* ui;
   Client* client;
   Element* analyzedWindow;
+  XUL::Exporter* xulExp;
 };
 
 #endif // MAINWINDOW_H

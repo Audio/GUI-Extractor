@@ -40,6 +40,18 @@ Element* Client::getRootElement()
   return ElementFactory::getElement(root);
 }
 
+Element* Client::getTopMenuElement(Element* window)
+{
+  QList<Element*> children = getImmediateChildren(window);
+
+  foreach (Element* child, children) {
+    if ( child->getType() == "menu" )
+      return child;
+  }
+
+  return NULL;
+}
+
 QList<Element*> Client::getImmediateChildren(Element* parent)
 {
   QList<Element*> children;

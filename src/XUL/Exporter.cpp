@@ -1,4 +1,5 @@
 #include "Exporter.h"
+#include "UIA/EMenuItem.h"
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QTextStream>
@@ -6,30 +7,25 @@
 
 using namespace XUL;
 
-Exporter::Exporter(const Element* window, const QTreeWidget* elementTree)
-  : QObject(), window(window), tree(elementTree)
+Exporter::Exporter(Element* window, const QTreeWidget* elementTree, Client* client)
+  : QObject(), window(window), client(client), tree(elementTree)
 {
 }
 
 void Exporter::save(const QString& filename)
 {
+  this->filename = filename;
   emit eventHappened( tr("XUL export is running, please wait...") );
 
   setRelativeWindowPositon();
   insertDocumentStartTags();
 
-  int topLevels = tree->topLevelItemCount();
-  for (int i = 0; i < topLevels; ++i) {
-    ElementTreeItem* topItem = (ElementTreeItem*) tree->topLevelItem(i);
-    elementDataToXml(topItem, 2);
-  }
-
-  insertDocumentEndTags();
-  saveToFile(filename);
-  saveStylesFile(filename);
+  bool menubarExists = analyzeMenubarIfExists();
+  if (!menubarExists)
+    analyzeContentAndCompleteSave();
 }
 
-void Exporter::saveToFile(const QString& filename)
+void Exporter::saveToFile()
 {
   QFile file(filename);
   if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) ) {
@@ -46,9 +42,9 @@ void Exporter::saveToFile(const QString& filename)
   emit eventHappened( tr("XUL export completed!") );
 }
 
-void Exporter::saveStylesFile(const QString& originalFilename)
+void Exporter::saveStylesFile()
 {
-  QFileInfo fi(originalFilename);
+  QFileInfo fi(filename);
   QString destination = fi.absolutePath() + "/gui_ex.css";
   bool ok = QFile::copy(":/styles/gui_ex.css", destination);
 
@@ -62,6 +58,78 @@ void Exporter::setRelativeWindowPositon()
   ElementArea a = window->getArea(valid);
   windowPositionLeft = valid ? a.getLeft() : 0;
   windowPositionTop = valid ? a.getTop() : 0;
+}
+
+bool Exporter::analyzeMenubarIfExists()
+{
+  EMenuBar* menubar = findMenuBar();
+
+  if (!menubar) {
+    return false;
+  } else {
+    xml.append( getIndentText(1) + "<menubar>" );
+
+    menuExp = new MenuExporter(menubar, window, client, this);
+    connect(menuExp, SIGNAL( menuLoaded(EMenuItem*, QList<Element*>) ), SLOT( exportMenu(EMenuItem*, QList<Element*>) ));
+    connect(menuExp, SIGNAL( menuNotLoaded(EMenuItem*) ), SLOT( exportMenu(EMenuItem*) ));
+    connect(menuExp, SIGNAL( allMenusLoaded() ), SLOT( completeMenuAnalysis() ));
+    return true;
+  }
+}
+
+EMenuBar* Exporter::findMenuBar()
+{
+  int topLevels = tree->topLevelItemCount();
+  for (int i = 0; i < topLevels; ++i) {
+    ElementTreeItem* topItem = (ElementTreeItem*) tree->topLevelItem(i);
+    if ( topItem->getElement()->getType() == "menubar" )
+      return (EMenuBar*) topItem->getElement();
+  }
+
+  return NULL;
+}
+
+void Exporter::exportMenu(EMenuItem* menuItem, QList<Element*> items)
+{
+  const QString label = menuItem->getCachedName();
+  xml.append( getIndentText(2) + "<menu label=\"" + label + "\">" );
+  xml.append( getIndentText(3) + "<menupopup>" );
+
+  foreach (Element* item, items) {
+    XUL::Item* xi = item->exportXUL(0, 0);
+    xml.append( getStartTag(xi, 4, true) );
+    delete xi;
+  }
+
+  xml.append( getIndentText(3) + "</menupopup>" );
+  xml.append( getIndentText(2) + "</menu>" );
+}
+
+void Exporter::completeMenuAnalysis()
+{
+  xml.append( getIndentText(1) + "</menubar>" );
+  analyzeContentAndCompleteSave();
+}
+
+void Exporter::analyzeContentAndCompleteSave()
+{
+  QString stackStart = getIndentText(1) + "<stack>";
+  xml.append(stackStart);
+
+  int topLevels = tree->topLevelItemCount();
+  for (int i = 0; i < topLevels; ++i) {
+    ElementTreeItem* topItem = (ElementTreeItem*) tree->topLevelItem(i);
+    if ( topItem->getElement()->getType() != "menubar" )
+      elementDataToXml(topItem, 2);
+  }
+
+  QString stackEnd = getIndentText(1) + "</stack>";
+  xml.append(stackEnd);
+
+  insertDocumentEndTags();
+  saveToFile();
+  saveStylesFile();
+  emit finished();
 }
 
 void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
@@ -119,15 +187,10 @@ void Exporter::insertDocumentStartTags()
   w.setAttribute("xmlns", "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
   w.setAttribute("title", window->getCachedName() );
   xml.append( getStartTag(&w, 0) );
-
-  QString stackStart = getIndentText(1) + "<stack>";
-  xml.append(stackStart);
 }
 
 void Exporter::insertDocumentEndTags()
 {
-  QString stackEnd = getIndentText(1) + "</stack>";
-  xml.append(stackEnd);
   xml.append("</window>");
 }
 

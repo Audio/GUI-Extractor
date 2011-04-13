@@ -2,7 +2,6 @@
 #include "ui_MainWindow.h"
 #include "UIA/Client.h"
 #include "Highlighter.h"
-#include "XUL/Exporter.h"
 #include <QtCore/QtDebug>
 #include <QtCore/QTime>
 #include <QtGui/QColorDialog>
@@ -11,7 +10,7 @@
 
 
 MainWindow::MainWindow(QWidget* parent)
-  : QMainWindow(parent), ui(new Ui::MainWindow), analyzedWindow(NULL)
+  : QMainWindow(parent), ui(new Ui::MainWindow), analyzedWindow(NULL), xulExp(NULL)
 {
   ui->setupUi(this);
   ui->elementTree->setColumnWidth(0, 250);
@@ -188,14 +187,23 @@ void MainWindow::exportXUL()
       return;
   }
 
+  if (xulExp)
+    return logMessage( tr("XUL export: already exporting!"), Log::WARNING);
+
   QString filename = QFileDialog::getSaveFileName(this, tr("Export in XUL format"), QString(), tr("XUL files (*.xul)") );
   if ( filename.isEmpty() )
     return;
 
-  XUL::Exporter ex(analyzedWindow, ui->elementTree);
-  connect(&ex, SIGNAL( eventHappened(const QString&, Log::Type)), SLOT( logMessage(const QString&, Log::Type) ));
-  ex.save(filename);
-  disconnect(&ex, 0, 0, 0);
+  xulExp = new XUL::Exporter(analyzedWindow, ui->elementTree, client);
+  connect(xulExp, SIGNAL( eventHappened(const QString&, Log::Type)), SLOT( logMessage(const QString&, Log::Type) ));
+  xulExp->save(filename);
+}
+
+void MainWindow::exportXULComplete()
+{
+  disconnect(xulExp, 0, 0, 0);
+  delete xulExp;
+  xulExp = NULL;
 }
 
 QString MainWindow::colorBaseOnLogType(Log::Type logType) const

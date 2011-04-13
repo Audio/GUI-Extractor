@@ -9,7 +9,7 @@ class ESeparator : public Element
 public:
   ESeparator(IUIAutomationElement* element);
   inline QString getType() const;
-  XUL::Item* exportXUL(int diffLeft, int diffTop) const;
+  XUL::Item* exportXUL(int, int) const;
 };
 
 #endif // ESEPARATOR_H

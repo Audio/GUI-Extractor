@@ -60,7 +60,8 @@ SOURCES  += main.cpp \
     UIA/ECalendar.cpp \
     UIA/EMenu.cpp \
     UIA/ESpinner.cpp \
-    UIA/EText.cpp
+    UIA/EText.cpp \
+    XUL/MenuExporter.cpp
 
 HEADERS  += MainWindow.h \
     UIA/Client.h \
@@ -113,7 +114,8 @@ HEADERS  += MainWindow.h \
     UIA/EMenu.h \
     UIA/ESpinner.h \
     UIA/EText.h \
-    LogType.h
+    LogType.h \
+    XUL/MenuExporter.h
 
 FORMS    += MainWindow.ui
 

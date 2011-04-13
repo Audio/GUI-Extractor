@@ -19,6 +19,7 @@ public:
 
   void init();
   Element* getRootElement();
+  Element* getTopMenuElement(Element* window);
   QList<Element*> getImmediateChildren(Element* parent);
   QList<Element*> topLevelWindows();
 
