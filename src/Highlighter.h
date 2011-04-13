@@ -20,6 +20,7 @@ private:
   Highlighter(const ElementArea& area);
   ~Highlighter();
   void setArea(const ElementArea& area);
+  void createCloseButton();
   void showCloseButtonIfNeeded();
 
   static void destroyActiveInstance();

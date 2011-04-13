@@ -9,13 +9,13 @@ QColor Highlighter::color = QColor(51, 102, 204);
 
 void Highlighter::highlight(const ElementArea& area)
 {
-  if (instance) {
+  if (instance)
     instance->setArea(area);
-    instance->show();
-  } else {
+  else
     instance = new Highlighter(area);
-    instance->show();
-  }
+
+  instance->show();
+  instance->showCloseButtonIfNeeded();
 }
 
 void Highlighter::hideActive()
@@ -41,12 +41,13 @@ Highlighter::Highlighter(const ElementArea& area)
   setWindowOpacity(0.5);
 
   setArea(area);
-  showCloseButtonIfNeeded();
+  createCloseButton();
 }
 
 Highlighter::~Highlighter()
 {
-   delete closeButton;
+  disconnect(closeButton, 0, 0, 0);
+  delete closeButton;
 }
 
 void Highlighter::setArea(const ElementArea& area)
@@ -58,7 +59,7 @@ void Highlighter::setArea(const ElementArea& area)
   resize(width, height);
 }
 
-void Highlighter::showCloseButtonIfNeeded()
+void Highlighter::createCloseButton()
 {
   closeButton = new QPushButton( QIcon(":/icons/close.png"), QString(), this );
   closeButton->setIconSize( QSize(16, 16) );
@@ -70,7 +71,10 @@ void Highlighter::showCloseButtonIfNeeded()
   QHBoxLayout* lay = new QHBoxLayout(this);
   lay->addWidget(closeButton);
   setLayout(lay);
+}
 
+void Highlighter::showCloseButtonIfNeeded()
+{
   closeButton->setVisible(width > 200 && height > 100);
 }
 
