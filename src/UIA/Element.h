@@ -23,6 +23,7 @@ public:
   bool isOffScreen() const;
   QString getCachedName() const;
   QString getName();
+  QString getLocalizedType();
   QString getOrientation() const;
   IUIAutomationElement* getUIAElement() const;
   virtual inline bool ignoreChildren() const { return false; };

@@ -4,5 +4,9 @@
 TopWindowsItem::TopWindowsItem(QTreeWidget* parent, Element* topWindow)
   : ElementHolder(topWindow), QTreeWidgetItem(parent)
 {
-  setText(0, element->getName() );
+  QString text = element->getName();
+  if ( text.isEmpty() )
+    text = " ?? [" + element->getLocalizedType() + "]";
+
+  setText(0, text);
 }

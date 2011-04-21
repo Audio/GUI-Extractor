@@ -46,6 +46,16 @@ QString Element::getName()
   return cachedName;
 }
 
+QString Element::getLocalizedType()
+{
+  BSTR type;
+  HRESULT hr = UIAElement->get_CurrentLocalizedControlType(&type);
+  if ( SUCCEEDED(hr) && type )
+    return bstrToQString(type);
+  else
+    return QObject::tr("Unknown");
+}
+
 QString Element::getOrientation() const
 {
   OrientationType ori;
