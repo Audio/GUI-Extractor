@@ -49,7 +49,7 @@ void Exporter::saveStylesFile()
   bool ok = QFile::copy(":/styles/gui_ex.css", destination);
 
   if (!ok && !QFile::exists(destination) )
-    emit eventHappened( tr("XUL export: cannot save the styles file"), Log::WARNING );
+    emit eventHappened( tr("XUL export: cannot save the styles file"), Log::WARNING);
 }
 
 void Exporter::setRelativeWindowPositon()

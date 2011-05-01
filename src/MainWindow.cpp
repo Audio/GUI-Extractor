@@ -150,6 +150,7 @@ void MainWindow::loadTopLevelWindows()
   ui->topWindows->clear();
   ui->elementTree->clear();
   ui->actionExportXUL->setEnabled(false);
+  ui->actionEnableHighlighting->setEnabled(true);
   QList<Element*> windows = client->topLevelWindows();
   foreach(Element* window, windows) {
     if ( !isThisApplication(window) )

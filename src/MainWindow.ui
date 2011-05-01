@@ -271,6 +271,9 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources/icons.qrc">
      <normaloff>:/icons/highlight.png</normaloff>:/icons/highlight.png</iconset>
