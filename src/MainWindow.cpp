@@ -200,6 +200,7 @@ void MainWindow::exportXUL()
 
   xulExp = new XUL::Exporter(analyzedWindow, ui->elementTree, client);
   connect(xulExp, SIGNAL( eventHappened(const QString&, Log::Type)), SLOT( logMessage(const QString&, Log::Type) ));
+  connect(xulExp, SIGNAL( finished() ), SLOT( exportXULComplete() ));
   xulExp->save(filename);
 }
 
