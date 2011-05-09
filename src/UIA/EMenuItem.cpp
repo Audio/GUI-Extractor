@@ -22,7 +22,8 @@ bool EMenuItem::supportExpandCollapse()
 {
   IUnknown* patternObject;
   HRESULT hr = UIAElement->GetCurrentPattern(UIA_ExpandCollapsePatternId, &patternObject);
-  patternObject->Release();
+  if (patternObject)
+    patternObject->Release();
   return SUCCEEDED(hr);
 }
 
