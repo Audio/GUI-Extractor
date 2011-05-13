@@ -44,7 +44,8 @@ private slots:
   void highlightSelectedElement();
   void highlightIfEnabled(Element* element);
 
-  void loadTopLevelWindows();
+  void prepareToLoadTopLevelWindows();
+  void loadTopLevelWindows(const QList<Element*>& windows);
 
   bool highlightingEnabled() const;
   void highlightingEnabledChanged(bool enabled);

@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   client = new Client();
   connect(client, SIGNAL( eventHappened(const QString&, Log::Type) ), SLOT( logMessage(const QString&, Log::Type) ));
+  connect(client, SIGNAL( topLevelWindowsLoaded(const QList<Element*>&) ), SLOT( loadTopLevelWindows(const QList<Element*>&) ));
   client->init();
 }
 
@@ -28,8 +29,8 @@ void MainWindow::setupUiConnections()
 {
   connect(ui->actionQuit, SIGNAL( triggered() ), qApp, SLOT( quit() ));
 
-  connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( loadTopLevelWindows() ));
-  connect(ui->actionReloadWindowList, SIGNAL( triggered() ), SLOT( loadTopLevelWindows() ));
+  connect(ui->buttonReload, SIGNAL( pressed() ), SLOT( prepareToLoadTopLevelWindows() ));
+  connect(ui->actionReloadWindowList, SIGNAL( triggered() ), SLOT( prepareToLoadTopLevelWindows() ));
 
   connect(ui->buttonAnalyze, SIGNAL( pressed() ), SLOT( analyzeSelectedWindow() ));
   connect(ui->actionSelectedWindow, SIGNAL( triggered() ), SLOT( analyzeSelectedWindow() ));
@@ -145,13 +146,17 @@ void MainWindow::highlightIfEnabled(Element* element)
   }
 }
 
-void MainWindow::loadTopLevelWindows()
+void MainWindow::prepareToLoadTopLevelWindows()
 {
   ui->topWindows->clear();
   ui->elementTree->clear();
   ui->actionExportXUL->setEnabled(false);
   ui->actionEnableHighlighting->setEnabled(true);
-  QList<Element*> windows = client->topLevelWindows();
+  client->loadTopLevelWindows();
+}
+
+void MainWindow::loadTopLevelWindows(const QList<Element*>& windows)
+{
   foreach(Element* window, windows) {
     if ( !isThisApplication(window) )
       new TopWindowsItem(ui->topWindows, window);

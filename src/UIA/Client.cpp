@@ -1,10 +1,12 @@
 #include "Client.h"
 #include "ElementFactory.h"
+#include <QtCore/QtConcurrentRun>
 
 
 Client::Client()
-  : UIA(NULL)
+  : UIA(NULL), future(), watcher()
 {
+  connect(&watcher, SIGNAL( finished() ), SLOT( getTopLevelWindows() ));
 }
 
 Client::~Client()
@@ -52,7 +54,7 @@ Element* Client::getTopMenuElement(Element* window)
   return NULL;
 }
 
-QList<Element*> Client::getImmediateChildren(Element* parent)
+QList<Element*> Client::getImmediateChildren(Element* parent, bool deleteParent)
 {
   QList<Element*> children;
 
@@ -73,17 +75,25 @@ QList<Element*> Client::getImmediateChildren(Element* parent)
 
   walker->Release();
 
+  if (deleteParent) {
+    delete parent;
+    parent = NULL;
+  }
+
   return children;
 }
 
-QList<Element*> Client::topLevelWindows()
+void Client::loadTopLevelWindows()
 {
-  QList<Element*> windows;
   Element* root = getRootElement();
   if (root) {
-    windows = getImmediateChildren(root);
-    delete root;
+    future = QtConcurrent::run(this, &Client::getImmediateChildren, root, true);
+    watcher.setFuture(future);
   }
+}
 
-  return windows;
+void Client::getTopLevelWindows() {
+  const int COUNT = future.result().size();
+  emit eventHappened( tr("Found ") + QString::number(COUNT) + tr(" top-level windows.") );
+  emit topLevelWindowsLoaded( future.result() );
 }
