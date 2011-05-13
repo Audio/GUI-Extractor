@@ -93,7 +93,7 @@ void Client::loadTopLevelWindows()
 }
 
 void Client::getTopLevelWindows() {
-  const int COUNT = future.result().size();
+  const int COUNT = future.result().size() - 1;
   emit eventHappened( tr("Found ") + QString::number(COUNT) + tr(" top-level windows.") );
   emit topLevelWindowsLoaded( future.result() );
 }
