@@ -10,3 +10,10 @@ QString EToolBar::getType() const
 {
   return "toolbar";
 }
+
+XUL::Item* EToolBar::exportXUL(int diffLeft, int diffTop) const
+{
+  XUL::Item* item = new XUL::Item("toolbar");
+  exportXULArea(item, diffLeft, diffTop);
+  return item;
+}

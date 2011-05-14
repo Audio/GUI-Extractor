@@ -9,6 +9,7 @@ class EToolBar : public Element
 public:
   EToolBar(IUIAutomationElement* element);
   inline QString getType() const;
+  XUL::Item* exportXUL(int diffLeft, int diffTop) const;
 };
 
 #endif // ETOOLBAR_H

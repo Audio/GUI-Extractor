@@ -9,6 +9,7 @@ class EDocument : public Element
 public:
   EDocument(IUIAutomationElement* element);
   inline QString getType() const;
+  XUL::Item* exportXUL(int diffLeft, int diffTop) const;
 };
 
 #endif // EDOCUMENT_H

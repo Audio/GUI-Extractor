@@ -13,6 +13,7 @@ QString ETab::getType() const
 
 XUL::Item* ETab::exportXUL(int diffLeft, int diffTop) const
 {
-  XUL::Item* item = new XUL::Item("tab");
+  XUL::Item* item = new XUL::Item("tabs");
+  exportXULArea(item, diffLeft, diffTop);
   return item;
 }

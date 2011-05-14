@@ -10,3 +10,8 @@ QString ESplitButton::getType() const
 {
   return "splitbutton";
 }
+
+XUL::Item* ESplitButton::exportXUL(int, int) const
+{
+  return XUL::NO_EXPORT;
+}
