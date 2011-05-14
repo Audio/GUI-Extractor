@@ -249,6 +249,10 @@ p, li { white-space: pre-wrap; }
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="resources/icons.qrc">
+     <normaloff>:/icons/analyse.png</normaloff>:/icons/analyse.png</iconset>
+   </property>
    <property name="text">
     <string>Selected window</string>
    </property>
@@ -319,6 +323,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionReloadWindowList">
+   <property name="icon">
+    <iconset resource="resources/icons.qrc">
+     <normaloff>:/icons/reload.png</normaloff>:/icons/reload.png</iconset>
+   </property>
    <property name="text">
     <string>Reload window list</string>
    </property>
