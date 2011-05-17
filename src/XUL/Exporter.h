@@ -46,6 +46,8 @@ namespace XUL {
 
     inline bool isEmptyElementAndHasNoChildren(const QString& elementName, int childrenCount) const;
 
+    QString replaceTags(const QString& string) const;
+
   private:
     Element* window;
     Client* client;

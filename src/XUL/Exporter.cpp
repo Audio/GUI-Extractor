@@ -164,7 +164,7 @@ QString Exporter::getStartTag(const XUL::Item* item, int indent, bool close) con
   QMapIterator<QString, QString> it(attributes);
   while ( it.hasNext() ) {
     it.next();
-    tag += " " + it.key() + "=\"" + it.value() + "\"";
+    tag += " " + it.key() + "=\"" + replaceTags( it.value() ) + "\"";
   }
 
   tag += (close) ? " />" : ">";
@@ -197,4 +197,12 @@ void Exporter::insertDocumentEndTags()
 bool Exporter::isEmptyElementAndHasNoChildren(const QString& elementName, int childrenCount) const
 {
   return elementName == "stack" && childrenCount == 0;
+}
+
+QString Exporter::replaceTags(const QString& string) const
+{
+  QString r(string);
+  r.replace('<', "&lt;");
+  r.replace('>', "&gt;");
+  return r;
 }
