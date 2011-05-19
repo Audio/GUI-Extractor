@@ -60,7 +60,7 @@ private slots:
 
 private:
   Ui::MainWindow* ui;
-  Client* client;
+  Client client;
   Element* analyzedWindow;
   XUL::Exporter* xulExp;
 };

@@ -19,10 +19,9 @@ MainWindow::MainWindow(QWidget* parent)
 
   setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
-  client = new Client();
-  connect(client, SIGNAL( eventHappened(const QString&, Log::Type) ), SLOT( logMessage(const QString&, Log::Type) ));
-  connect(client, SIGNAL( topLevelWindowsLoaded(const QList<Element*>&) ), SLOT( loadTopLevelWindows(const QList<Element*>&) ));
-  client->init();
+  connect(&client, SIGNAL( eventHappened(const QString&, Log::Type) ), SLOT( logMessage(const QString&, Log::Type) ));
+  connect(&client, SIGNAL( topLevelWindowsLoaded(const QList<Element*>&) ), SLOT( loadTopLevelWindows(const QList<Element*>&) ));
+  client.init();
 }
 
 void MainWindow::setupUiConnections()
@@ -49,9 +48,8 @@ void MainWindow::setupUiConnections()
 
 MainWindow::~MainWindow()
 {
-  disconnect(client, 0, 0, 0);
+  disconnect(&client, 0, 0, 0);
   delete ui;
-  delete client;
 }
 
 void MainWindow::logMessage(const QString& message, Log::Type logType)
@@ -104,7 +102,7 @@ void MainWindow::analyzeSelectedWindow()
   logMessage( tr("Analyzing: ") + element->getName() );
   ui->elementTree->clear();
 
-  QList<Element*> children = client->getImmediateChildren(element);
+  QList<Element*> children = client.getImmediateChildren(element);
   foreach(Element* child, children)
     addToTreeIncludingChildren(child);
 
@@ -117,7 +115,7 @@ void MainWindow::addToTreeIncludingChildren(Element* element, ElementTreeItem* p
   ElementTreeItem* item = (parent) ? new ElementTreeItem(parent, element)
                                    : new ElementTreeItem(ui->elementTree, element);
 
-  QList<Element*> children = client->getImmediateChildren(element);
+  QList<Element*> children = client.getImmediateChildren(element);
   foreach(Element* child, children)
     addToTreeIncludingChildren(child, item);
 }
@@ -152,7 +150,7 @@ void MainWindow::prepareToLoadTopLevelWindows()
   ui->elementTree->clear();
   ui->actionExportXUL->setEnabled(false);
   ui->actionEnableHighlighting->setEnabled(true);
-  client->loadTopLevelWindows();
+  client.loadTopLevelWindows();
 }
 
 void MainWindow::loadTopLevelWindows(const QList<Element*>& windows)
@@ -203,7 +201,7 @@ void MainWindow::exportXUL()
   if ( filename.isEmpty() )
     return;
 
-  xulExp = new XUL::Exporter(analyzedWindow, ui->elementTree, client);
+  xulExp = new XUL::Exporter(analyzedWindow, ui->elementTree, &client);
   connect(xulExp, SIGNAL( eventHappened(const QString&, Log::Type)), SLOT( logMessage(const QString&, Log::Type) ));
   connect(xulExp, SIGNAL( finished() ), SLOT( exportXULComplete() ));
   xulExp->save(filename);
