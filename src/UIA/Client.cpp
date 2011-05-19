@@ -1,11 +1,13 @@
 #include "Client.h"
 #include "ElementFactory.h"
 #include <QtCore/QtConcurrentRun>
+#include <QtCore/QThreadPool>
 
 
 Client::Client()
   : UIA(NULL), future(), watcher()
 {
+  QThreadPool::globalInstance()->setExpiryTimeout(-1);
   connect(&watcher, SIGNAL( finished() ), SLOT( getTopLevelWindows() ));
 }
 
