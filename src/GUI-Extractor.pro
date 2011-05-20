@@ -124,3 +124,5 @@ FORMS    += MainWindow.ui \
 
 RESOURCES += resources/icons.qrc \
     resources/styles.qrc
+
+RC_FILE = resources/appico.rc
