@@ -70,6 +70,7 @@ bool Exporter::analyzeMenubarIfExists()
     xml.append( getIndentText(1) + "<menubar>" );
 
     menuExp = new MenuExporter(menubar, window, client, this);
+    connect(menuExp, SIGNAL( eventHappened(const QString&, Log::Type) ), SLOT( resendEventHappened(const QString&, Log::Type) ));
     connect(menuExp, SIGNAL( menuLoaded(EMenuItem*, QList<Element*>) ), SLOT( exportMenu(EMenuItem*, QList<Element*>) ));
     connect(menuExp, SIGNAL( menuNotLoaded(EMenuItem*) ), SLOT( exportMenu(EMenuItem*) ));
     connect(menuExp, SIGNAL( allMenusLoaded() ), SLOT( completeMenuAnalysis() ));
@@ -205,4 +206,8 @@ QString Exporter::replaceTags(const QString& string) const
   r.replace('<', "&lt;");
   r.replace('>', "&gt;");
   return r;
+}
+
+void Exporter::resendEventHappened(const QString& message, Log::Type logType) {
+  emit eventHappened(message, logType);
 }

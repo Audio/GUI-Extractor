@@ -48,6 +48,8 @@ namespace XUL {
 
     QString replaceTags(const QString& string) const;
 
+    void resendEventHappened(const QString& message, Log::Type logType = Log::NORMAL);
+
   private:
     Element* window;
     Client* client;

@@ -3,7 +3,7 @@
 
 
 MenuExporter::MenuExporter(EMenuBar* menubar, Element* window, Client* client, QObject* parent)
-  : QObject(parent), window(window), client(client), currentItem(NULL)
+  : QObject(parent), window(window), client(client), currentItem(NULL), TIMEOUT(100)
 {
   QList<Element*> tempItems = client->getImmediateChildren(menubar);
   foreach (Element* item, tempItems) {
@@ -13,6 +13,7 @@ MenuExporter::MenuExporter(EMenuBar* menubar, Element* window, Client* client, Q
   }
 
   timer = new QTimer(this);
+  timer->setSingleShot(true);
   connect(timer, SIGNAL( timeout() ), SLOT( tryAnalyzeMenu() ));
 
   prepareToLoadNextMenu();
@@ -26,7 +27,7 @@ void MenuExporter::prepareToLoadNextMenu()
     currentItem = items.takeFirst();
     currentItem->expandMenu();
     failAttempts = 0;
-    timer->start(100);
+    timer->start(TIMEOUT);
   }
 }
 
@@ -34,7 +35,7 @@ void MenuExporter::tryAnalyzeMenu()
 {
   EMenu* menu = (EMenu*) client->getTopMenuElement(window);
   if (menu) {
-    timer->stop();
+    emit eventHappened( tr("XUL export: loaded items of menu '") + currentItem->getCachedName() + "'" );
     QList<Element*> menuItems = client->getImmediateChildren(menu);
     emit menuLoaded(currentItem, menuItems);
     currentItem->collapseMenu();
@@ -45,10 +46,13 @@ void MenuExporter::tryAnalyzeMenu()
     ++failAttempts;
 
     if (failAttempts >= 10) {
+      emit eventHappened( tr("XUL export: cannot find items of menu '") + currentItem->getCachedName() + "'", Log::WARNING);
       emit menuNotLoaded(currentItem);
       currentItem->collapseMenu();
       delete currentItem;
       prepareToLoadNextMenu();
+    } else {
+      timer->start(TIMEOUT);
     }
   }
 }

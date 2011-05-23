@@ -1,6 +1,7 @@
 #ifndef MENUEXPORTER_H
 #define MENUEXPORTER_H
 
+#include "LogType.h"
 #include "UIA/Client.h"
 #include "UIA/EMenuBar.h"
 #include "UIA/EMenuItem.h"
@@ -21,6 +22,7 @@ signals:
   void menuLoaded(EMenuItem* menuItem, QList<Element*>);
   void menuNotLoaded(EMenuItem* menuItem);
   void allMenusLoaded();
+  void eventHappened(const QString&, Log::Type = Log::NORMAL);
 
 private slots:
   void prepareToLoadNextMenu();
@@ -33,6 +35,7 @@ private:
   EMenuItem* currentItem;
   QTimer* timer;
   int failAttempts;
+  const int TIMEOUT;
 };
 
 #endif // MENUEXPORTER_H
