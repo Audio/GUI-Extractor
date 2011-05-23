@@ -60,6 +60,7 @@ namespace XUL {
     const QTreeWidget* tree;
     QList<QString> xml;
     QString filename;
+    uint count;
   };
 
 }

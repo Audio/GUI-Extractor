@@ -8,7 +8,7 @@
 using namespace XUL;
 
 Exporter::Exporter(Element* window, const QTreeWidget* elementTree, Client* client)
-  : QObject(), window(window), client(client), tree(elementTree)
+  : QObject(), window(window), client(client), tree(elementTree), count(0)
 {
 }
 
@@ -39,7 +39,7 @@ void Exporter::saveToFile()
     out << it.next() << "\n";
 
   file.close();
-  emit eventHappened( tr("XUL export completed!") );
+  emit eventHappened( tr("XUL export completed! Found ") + QString::number(count) + tr(" elements.") );
 }
 
 void Exporter::saveStylesFile()
@@ -104,6 +104,7 @@ void Exporter::exportMenu(EMenuItem* menuItem, QList<Element*> items)
 
   xml.append( getIndentText(3) + "</menupopup>" );
   xml.append( getIndentText(2) + "</menu>" );
+  count += 2 + (uint) items.size();
 }
 
 void Exporter::completeMenuAnalysis()
@@ -153,6 +154,7 @@ void Exporter::elementDataToXml(const ElementTreeItem* treeItem, int indent)
   }
 
   delete item;
+  ++count;
 }
 
 QString Exporter::getStartTag(const XUL::Item* item, int indent, bool close) const
